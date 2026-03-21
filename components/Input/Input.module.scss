@@ -1,0 +1,5 @@
+@use '../../styles/abstracts/mixins';
+
+.input {
+    @include input-base;
+}

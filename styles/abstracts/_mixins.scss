@@ -1,0 +1,23 @@
+@mixin input-base {
+  font-family: $font-main;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 150%;
+  color: $black;
+  
+  padding: 13px 15px;
+  border: 1px solid $input-border;
+  border-radius: 60px;
+
+  outline: none;
+
+  &::placeholder {
+    color: $placeholder;
+    font-family: $font-main;
+  }
+
+  &:focus {
+    border-color: $green;
+  }
+
+}
