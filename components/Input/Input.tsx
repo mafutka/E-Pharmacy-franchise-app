@@ -1,59 +1,34 @@
-import { InputProps } from "@/types/ui"
-import scss from "./Input.module.scss"
+import { InputProps } from "@/types/ui";
+import scss from "./Input.module.scss";
 
 export default function Input({
   label,
-  type = "text",
-  name,
-  value,
-  onChange,
-  placeholder,
+  error,
   variant = "input",
   options = [],
-  error,
-  disabled,
-  rows = 4,
   className = "",
+  children,
 }: InputProps) {
   return (
     <div className={scss.input}>
-      {label && <label htmlFor="">{label}</label>}
-      {variant === "textarea" ? (
-        <textarea
-          name={name}
-          value={value}
-          onChange={onChange}
-          disabled={disabled}
-          className={className}
-        />
-      ) : variant === "select" ? (
-        <select
-          name={name}
-          value={value}
-          onChange={onChange}
-          disabled={disabled}
-          className={className}
-        >
-          <option value="">Select...</option>
-          {options.map((opt) => (
-            <option key={opt.value} value={opt.value}>
-              {opt.label}
-            </option>
-          ))}
-        </select>
-      ) : (
-        <input
-          type={type}
-          name={name}
-          value={value}
-          onChange={onChange}
-          disabled={disabled}
-          className={className}
-        />
-      )}
-      {error && (
-        <p>Error</p>
-      )}
+      {label && <label className={scss.label}>{label}</label>}
+
+      <div className={`${scss.field} ${error ? scss.errorField : ""}`}>
+        {variant === "select" && options.length ? (
+          <select className={className}>
+            <option value="">Select...</option>
+            {options.map((opt) => (
+              <option key={opt.value} value={opt.value}>
+                {opt.label}
+              </option>
+            ))}
+          </select>
+        ) : (
+          children
+        )}
+      </div>
+
+      {error && <p className={scss.errorText}>{error}</p>}
     </div>
-  )
+  );
 }
