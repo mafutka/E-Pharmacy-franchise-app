@@ -1,12 +1,14 @@
+@use "../abstracts/variables" as v;
+
 body {
-  font-family: $font-main;
+  font-family: v.$font-main;
 }
 
-$heading-wight: 600;
+$heading-weight: 600;
 
 h1,
 h2,
 h3,
 h4 {
-  font-weight: $heading-wight;
+  font-weight: $heading-weight;
 }
