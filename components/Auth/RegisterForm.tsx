@@ -2,18 +2,20 @@
 
 import { useForm } from "react-hook-form";
 import Input from "@/components/Input/Input";
+import { RegisterFormData } from "@/types/auth";
 import { registerSchema } from "@/validation/authSchemas";
-import { registerUser } from "../../services/authApi";
+import { ValidationError, ValidationErrorItem } from "joi";
+import { registerUser } from "@/services/authApi";
 import { useState } from "react";
 import Link from "next/link";
 
 export default function RegisterForm() {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm<RegisterFormData>();
 
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const onSubmit = async (data: any) => {
-    // 🧠 Joi валідація
+  const onSubmit = async (data: RegisterFormData) => {
+   
     const { error } = registerSchema.validate(data, {
       abortEarly: false,
     });
@@ -21,7 +23,7 @@ export default function RegisterForm() {
     if (error) {
       const formattedErrors: Record<string, string> = {};
 
-      error.details.forEach((err) => {
+      (error as ValidationError).details.forEach((err: ValidationErrorItem) => {
         const field = err.path[0] as string;
         formattedErrors[field] = err.message;
       });
@@ -29,15 +31,7 @@ export default function RegisterForm() {
       setErrors(formattedErrors);
       return;
     }
-
-    try {
-      const res = await registerUser(data);
-      console.log(res);
-
-      alert("Registered successfully!");
-    } catch (err: any) {
-      alert(err.response?.data?.message || "Error");
-    }
+      await registerUser(data);
   };
 
   return (

@@ -1,5 +1,19 @@
 @use '../../styles/abstracts/mixins';
 
 .input {
-    @include input-base;
+    @include mixins.input-base;
+}
+.field {
+  display: flex;
+  align-items: center;
+
+  input,
+  textarea,
+  select {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    font: inherit;
+  }
 }
