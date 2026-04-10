@@ -17,7 +17,8 @@
     "react-dom": "19.2.4",
     "react-hook-form": "^7.71.2",
     "resolvers": "^1.0.0",
-    "sass": "^1.98.0"
+    "sass": "^1.98.0",
+    "zustand": "^5.0.12"
   },
   "devDependencies": {
     "@types/node": "^20",
