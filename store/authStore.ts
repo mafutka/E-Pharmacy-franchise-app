@@ -1,6 +1,6 @@
 import {create} from "zustand";
 import type { AuthState } from "@/types/auth";
-import {getCurrentUser} from "../services/authApi"
+import {getCurrentUser} from "@/services/authApi"
 
 export const useAuthStore = create<AuthState>((set) => ({
   token: null,

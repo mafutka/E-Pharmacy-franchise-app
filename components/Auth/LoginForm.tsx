@@ -8,16 +8,23 @@ import { ValidationErrorItem } from "joi";
 import { loginUser } from "@/services/authApi";
 import { useState } from "react";
 import Link from "next/link";
+import { useAuthStore } from "@/store/authStore";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
   const { register, handleSubmit } = useForm<LoginFormData>();
 
+  const setToken = useAuthStore((s) => s.setToken);
+  const router = useRouter();
+
   const [errors, setErrors] = useState<
     Partial<Record<keyof LoginFormData, string>>
   >({});
+  const [serverError, setServerError] = useState("");
 
   const onSubmit = async (data: LoginFormData) => {
     setErrors({});
+    setServerError("");
 
     const { error } = loginSchema.validate(data, {
       abortEarly: false,
@@ -40,13 +47,15 @@ export default function LoginForm() {
     try {
       const res = await loginUser(data);
 
-      console.log(res);
+      setToken(res.token);
 
-      localStorage.setItem("token", res.token);
-
-      alert("Logged in!");
+      router.push("/dashboard"); 
     } catch (err: unknown) {
-      alert("Invalid credentials");
+      if (err instanceof Error) {
+        setServerError(err.message);
+      } else {
+        setServerError("Invalid credentials");
+      }
     }
   };
 
@@ -65,6 +74,8 @@ export default function LoginForm() {
       </Input>
 
       <button type="submit">Log in</button>
+
+      {serverError && <p>{serverError}</p>}
 
       <p>
         Don’t have an account? <Link href="/register">Register</Link>
