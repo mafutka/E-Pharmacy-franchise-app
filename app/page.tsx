@@ -5,7 +5,6 @@ export default function Home() {
     <div >
       <main>
         <p>HomePage</p>
-        <RegisterForm />
       </main>
     </div>
   );
