@@ -49,7 +49,7 @@ export default function LoginForm() {
 
       setToken(res.token);
 
-      router.push("/dashboard"); 
+      router.push("/create-shop"); 
     } catch (err: unknown) {
       if (err instanceof Error) {
         setServerError(err.message);
