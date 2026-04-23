@@ -74,28 +74,28 @@ export default function CreateShopForm() {
       <h1>Create your Shop</h1>
       <p>This information will be displayed publicly</p>
 
-      <Input name="name" placeholder="Shop Name" onChange={handleChange} />
-      <Input name="owner" placeholder="Owner Name" onChange={handleChange} />
-      <Input name="email" placeholder="Email" onChange={handleChange} />
-      <Input name="phone" placeholder="Phone" onChange={handleChange} />
-      <Input name="address" placeholder="Address" onChange={handleChange} />
-      <Input name="city" placeholder="City" onChange={handleChange} />
-      <Input name="zip" placeholder="Zip" onChange={handleChange} />
-      <Input name="password" type="password" onChange={handleChange} />
+      <input name="name" placeholder="Shop Name" onChange={handleChange} />
+      <input name="owner" placeholder="Owner Name" onChange={handleChange} />
+      <input name="email" placeholder="Email" onChange={handleChange} />
+      <input name="phone" placeholder="Phone" onChange={handleChange} />
+      <input name="address" placeholder="Address" onChange={handleChange} />
+      <input name="city" placeholder="City" onChange={handleChange} />
+      <input name="zip" placeholder="Zip" onChange={handleChange} />
+      <input name="password" type="password" onChange={handleChange} />
 
       <div>
         <label>
-          <Input type="radio" name="hasDelivery" value="yes" onChange={handleChange} />
+          <input type="radio" name="hasDelivery" value="yes" onChange={handleChange} />
           Yes
         </label>
 
         <label>
-          <Input type="radio" name="hasDelivery" value="no" onChange={handleChange} />
+          <input type="radio" name="hasDelivery" value="no" onChange={handleChange} />
           No
         </label>
       </div>
 
-      <Input type="file" onChange={handleFile} />
+      <input type="file" onChange={handleFile} />
 
       {error && <p style={{ color: "red" }}>{error}</p>}
 
