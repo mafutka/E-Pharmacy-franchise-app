@@ -1,9 +1,10 @@
 "use client";
-
+import {useForm} from "react-hook-form";
 import { useState } from "react";
 import { createShop } from "../../services/shopApi";
 import { useRouter } from "next/navigation";
 import Input from "../Input/Input";
+
 
 type FormState = {
   name: string;
@@ -15,93 +16,93 @@ type FormState = {
   zip: string;
   password: string;
   hasDelivery: string;
+  logo: FileList;
 };
 
 export default function CreateShopForm() {
+  const { register, handleSubmit } = useForm<FormState>();
   const router = useRouter();
-
-  const [form, setForm] = useState<FormState>({
-    name: "",
-    owner: "",
-    email: "",
-    phone: "",
-    address: "",
-    city: "",
-    zip: "",
-    password: "",
-    hasDelivery: "no",
-  });
-
-  const [logo, setLogo] = useState<File | null>(null);
   const [error, setError] = useState("");
 
-  // 🔹 input
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) return;
-    setLogo(e.target.files[0]);
-  };
-
-  const handleSubmit = async () => {
+const onSubmit = async (data: FormState) => {
     try {
-      const data = new FormData();
+      const formData = new FormData();
 
-      Object.entries(form).forEach(([key, value]) => {
-        data.append(key, value);
+      Object.entries(data).forEach(([key, value]) => {
+        if (key === "logo") return;
+        formData.append(key, value as string);
       });
 
-      if (logo) {
-        data.append("logo", logo);
+      if (data.logo?.[0]) {
+        formData.append("logo", data.logo[0]);
       }
 
-      await createShop(data);
-
+      await createShop(formData);
       router.push("/shop");
-
-    } catch (err) {
+    } catch {
       setError("Failed to create shop");
     }
   };
 
   return (
-    <div className="form">
-      <h1>Create your Shop</h1>
-      <p>This information will be displayed publicly</p>
+     <form onSubmit={handleSubmit(onSubmit)}>
+      <Input>
+        <input placeholder="Shop Name" {...register("name")} />
+      </Input>
 
-      <input name="name" placeholder="Shop Name" onChange={handleChange} />
-      <input name="owner" placeholder="Owner Name" onChange={handleChange} />
-      <input name="email" placeholder="Email" onChange={handleChange} />
-      <input name="phone" placeholder="Phone" onChange={handleChange} />
-      <input name="address" placeholder="Address" onChange={handleChange} />
-      <input name="city" placeholder="City" onChange={handleChange} />
-      <input name="zip" placeholder="Zip" onChange={handleChange} />
-      <input name="password" type="password" onChange={handleChange} />
+      <Input>
+        <input placeholder="Owner Name" {...register("owner")} />
+      </Input>
+
+      <Input>
+        <input placeholder="Email" {...register("email")} />
+      </Input>
+
+      <Input>
+        <input placeholder="Phone" {...register("phone")} />
+      </Input>
+
+      <Input>
+        <input placeholder="Address" {...register("address")} />
+      </Input>
+
+      <Input>
+        <input placeholder="City" {...register("city")} />
+      </Input>
+
+      <Input>
+        <input placeholder="Zip" {...register("zip")} />
+      </Input>
+
+      <Input>
+        <input type="password" {...register("password")} />
+      </Input>
 
       <div>
         <label>
-          <input type="radio" name="hasDelivery" value="yes" onChange={handleChange} />
+          <input
+            type="radio"
+            value="yes"
+            {...register("hasDelivery")}
+          />
           Yes
         </label>
 
         <label>
-          <input type="radio" name="hasDelivery" value="no" onChange={handleChange} />
+          <input
+            type="radio"
+            value="no"
+            {...register("hasDelivery")}
+          />
           No
         </label>
       </div>
 
-      <input type="file" onChange={handleFile} />
+      <input type="file" {...register("logo")} />
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && <p>{error}</p>}
 
-      <button onClick={handleSubmit}>
-        Create Account
-      </button>
-    </div>
+      <button type="submit">Create Account</button>
+    </form>
   );
 }
