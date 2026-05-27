@@ -1,51 +1,51 @@
-"use client";
-import {useForm} from "react-hook-form";
-import { useState } from "react";
-import { createShop } from "../../services/shopApi";
-import { useRouter } from "next/navigation";
-import Input from "../Input/Input";
-
+"use client"
+import { useForm } from "react-hook-form"
+import { useState } from "react"
+import { createShop } from "../../services/shopApi"
+import { useRouter } from "next/navigation"
+import Input from "../Input/Input"
+import SubmitBtn from "../SubmitBtn/SubmitBtn"
 
 type FormState = {
-  name: string;
-  owner: string;
-  email: string;
-  phone: string;
-  address: string;
-  city: string;
-  zip: string;
-  password: string;
-  hasDelivery: string;
-  logo: FileList;
-};
+  name: string
+  owner: string
+  email: string
+  phone: string
+  address: string
+  city: string
+  zip: string
+  password: string
+  hasDelivery: string
+  logo: FileList
+}
 
 export default function CreateShopForm() {
-  const { register, handleSubmit } = useForm<FormState>();
-  const router = useRouter();
-  const [error, setError] = useState("");
+  const { register, handleSubmit } = useForm<FormState>()
+  const router = useRouter()
+  const [error, setError] = useState("")
 
-const onSubmit = async (data: FormState) => {
+  const onSubmit = async (data: FormState) => {
     try {
-      const formData = new FormData();
+      const formData = new FormData()
 
       Object.entries(data).forEach(([key, value]) => {
-        if (key === "logo") return;
-        formData.append(key, value as string);
-      });
+        if (key === "logo") return
+        formData.append(key, value as string)
+      })
 
       if (data.logo?.[0]) {
-        formData.append("logo", data.logo[0]);
+        formData.append("logo", data.logo[0])
       }
 
-      await createShop(formData);
-      router.push("/shop");
+      await createShop(formData)
+      router.push("/shop")
     } catch {
-      setError("Failed to create shop");
+      setError("Failed to create shop")
     }
-  };
+  }
 
   return (
-     <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <Input>
         <input placeholder="Shop Name" {...register("name")} />
       </Input>
@@ -80,20 +80,12 @@ const onSubmit = async (data: FormState) => {
 
       <div>
         <label>
-          <input
-            type="radio"
-            value="yes"
-            {...register("hasDelivery")}
-          />
+          <input type="radio" value="yes" {...register("hasDelivery")} />
           Yes
         </label>
 
         <label>
-          <input
-            type="radio"
-            value="no"
-            {...register("hasDelivery")}
-          />
+          <input type="radio" value="no" {...register("hasDelivery")} />
           No
         </label>
       </div>
@@ -101,8 +93,9 @@ const onSubmit = async (data: FormState) => {
       <input type="file" {...register("logo")} />
 
       {error && <p>{error}</p>}
-
-      <button type="submit">Create Account</button>
+      <SubmitBtn>
+        <button type="submit">Create Account</button>
+      </SubmitBtn>
     </form>
-  );
+  )
 }

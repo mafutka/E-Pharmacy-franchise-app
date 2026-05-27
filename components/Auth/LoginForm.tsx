@@ -2,6 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import Input from "@/components/Input/Input";
+import SubmitBtn from "../SubmitBtn/SubmitBtn";
 import { loginSchema } from "@/validation/authSchemas";
 import { LoginFormData } from "@/types/auth";
 import { ValidationErrorItem } from "joi";
@@ -72,8 +73,10 @@ export default function LoginForm() {
           {...register("password")}
         />
       </Input>
-
-      <button type="submit">Log in</button>
+<SubmitBtn>
+  <button type="submit">Log in</button>
+</SubmitBtn>
+      
 
       {serverError && <p>{serverError}</p>}
 

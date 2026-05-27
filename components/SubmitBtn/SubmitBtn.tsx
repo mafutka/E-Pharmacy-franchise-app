@@ -1,4 +1,4 @@
-import css from "./SubmitBtn.module.scss";
+import scss from "./SubmitBtn.module.scss";
 
 export default function SubmitBtn({
     children,
@@ -9,7 +9,7 @@ children: React.ReactNode;
 type?: "button" | "submit";
 }) {
     return (
-        <button type={type} className={css.button}>
+        <button type={type} className={scss.button}>
             {children}
         </button>
     )
