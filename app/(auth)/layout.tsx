@@ -16,12 +16,11 @@ export default function AuthLayout({
         <div>
           <h2>
             Your medication,
-            <span><img src="/white-round-pill.png" alt="the pill" /></span> 
+            <span><img src="/white-round-pill.png" alt="the pill" width={95} height={93}/></span> 
             delivered Say goodbye to all your healthcare worries with us
           </h2>
         </div>
-        <div style={{ border: "5px solid red" }}>
-<h1>AUTH LAYOUT</h1>
+        <div >
         {children}
         </div>
       </div>

@@ -1,4 +1,4 @@
-@use "./abstracts/variables";
+@use "./abstracts/variables" as v;
 @use "./abstracts/mixins";
 @use "./base/base";
 
@@ -6,4 +6,9 @@
 .container {
   padding: 25px 20px;
   margin: 0 auto;
+}
+
+a {
+  text-decoration: none;
+  color: v.$black;
 }
