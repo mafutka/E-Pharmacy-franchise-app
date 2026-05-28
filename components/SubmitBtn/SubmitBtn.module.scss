@@ -1,6 +1,7 @@
 @use "../../styles/abstracts/variables" as v;
 
 .button {
- background-color: $green;
- color: $white;
+    border: none;
+ background-color: v.$green;
+ color: v.$white;
 }

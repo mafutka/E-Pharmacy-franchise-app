@@ -16,7 +16,7 @@ export default function AuthLayout({
         <div>
           <h2>
             Your medication,
-            <span><img src="white round pill.png" alt="the pill" /></span> 
+            <span><img src="/white-round-pill.png" alt="the pill" /></span> 
             delivered Say goodbye to all your healthcare worries with us
           </h2>
         </div>
@@ -24,12 +24,12 @@ export default function AuthLayout({
         {children}
       </div>
 
-      <div>
+      {/* <div>
         <img
           src="/auth-image.png"
           alt="auth"
         />
-      </div>
+      </div> */}
     </div>
   );
 }

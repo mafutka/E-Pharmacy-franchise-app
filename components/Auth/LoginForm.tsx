@@ -73,8 +73,8 @@ export default function LoginForm() {
           {...register("password")}
         />
       </Input>
-<SubmitBtn>
-  <button type="submit">Log in</button>
+<SubmitBtn type="submit">Log in
+
 </SubmitBtn>
       
 

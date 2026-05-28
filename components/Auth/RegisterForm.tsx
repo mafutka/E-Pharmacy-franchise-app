@@ -82,9 +82,7 @@ export default function RegisterForm() {
           {...register("password")}
         />
       </Input>
-      <SubmitBtn>
-        <button type="submit">Register</button>
-      </SubmitBtn>
+      <SubmitBtn type="submit">Register</SubmitBtn>
       {serverError && <p>{serverError}</p>}
 
       <p>
