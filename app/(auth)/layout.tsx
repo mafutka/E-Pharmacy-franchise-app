@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Logo from "../Logo/Logo";
+import Logo from "../../components/Logo/Logo";
 
 export default function AuthLayout({
   children,
@@ -20,8 +20,10 @@ export default function AuthLayout({
             delivered Say goodbye to all your healthcare worries with us
           </h2>
         </div>
-
+        <div style={{ border: "5px solid red" }}>
+<h1>AUTH LAYOUT</h1>
         {children}
+        </div>
       </div>
 
       {/* <div>
