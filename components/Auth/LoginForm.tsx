@@ -11,6 +11,7 @@ import { useState } from "react"
 import Link from "next/link"
 import { useAuthStore } from "@/store/authStore"
 import { useRouter } from "next/navigation"
+import scss from "./Auth.module.scss"
 
 export default function LoginForm() {
   const { register, handleSubmit } = useForm<LoginFormData>()
@@ -60,26 +61,31 @@ export default function LoginForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Input error={errors.email}>
-        <input placeholder="Email address" {...register("email")} />
-      </Input>
+      <div className={scss.container}>
+        <div className={scss.authTop}>
+          <Input error={errors.email}>
+            <input placeholder="Email address" {...register("email")} />
+          </Input>
 
-      <Input error={errors.password}>
-        <input
-          type="password"
-          placeholder="Password"
-          {...register("password")}
-        />
-      </Input>
-      <SubmitBtn type="submit" className="scss.authBtn">
-        Log in
-      </SubmitBtn>
+          <Input error={errors.password}>
+            <input
+              type="password"
+              placeholder="Password"
+              {...register("password")}
+            />
+          </Input>
+        </div>
+        <div className={scss.authBottom}>
+          <SubmitBtn type="submit" className="scss.authBtn">
+            Log in
+          </SubmitBtn>
 
-      {serverError && <p>{serverError}</p>}
-
-      <p>
-        <Link href="/register">Don’t have an account?</Link>
-      </p>
+          {serverError && <p>{serverError}</p>}
+          <Link href="/register" className={scss.link}>
+            Don’t have an account?
+          </Link>
+        </div>
+      </div>
     </form>
   )
 }

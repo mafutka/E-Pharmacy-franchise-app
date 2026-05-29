@@ -11,6 +11,7 @@ import { useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useAuthStore } from "@/store/authStore"
+import scss from "./Auth.module.scss"
 
 export default function RegisterForm() {
   const { register, handleSubmit } = useForm<RegisterFormData>()
@@ -63,31 +64,39 @@ export default function RegisterForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Input error={errors.name}>
-        <input placeholder="User Name" {...register("name")} />
-      </Input>
+      <div className={scss.container}>
+        <div className={scss.authTop}>
+          <Input error={errors.name}>
+            <input placeholder="User Name" {...register("name")} />
+          </Input>
 
-      <Input error={errors.email}>
-        <input placeholder="Email address" {...register("email")} />
-      </Input>
+          <Input error={errors.email}>
+            <input placeholder="Email address" {...register("email")} />
+          </Input>
 
-      <Input error={errors.phoneNumber}>
-        <input placeholder="Phone number" {...register("phoneNumber")} />
-      </Input>
+          <Input error={errors.phoneNumber}>
+            <input placeholder="Phone number" {...register("phoneNumber")} />
+          </Input>
 
-      <Input error={errors.password}>
-        <input
-          type="password"
-          placeholder="Password"
-          {...register("password")}
-        />
-      </Input>
-      <SubmitBtn type="submit" className="scss.authBtn">Register</SubmitBtn>
-      {serverError && <p>{serverError}</p>}
+          <Input error={errors.password}>
+            <input
+              type="password"
+              placeholder="Password"
+              {...register("password")}
+            />
+          </Input>
+        </div>
+        <div className={scss.authBottom}>
+          <SubmitBtn type="submit" className="scss.authBtn">
+            Register
+          </SubmitBtn>
+          {serverError && <p>{serverError}</p>}
 
-      <p>
-         <Link href="/login">Already have an account?</Link>
-      </p>
+          <Link href="/login" className={scss.link}>
+            Already have an account?
+          </Link>
+        </div>
+      </div>
     </form>
   )
 }

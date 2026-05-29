@@ -1,1 +1,27 @@
-.authBtn {}
+@use "../../styles/abstracts/variables" as v;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.authTop {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.authBottom {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.authBtn {
+  width: 100%;
+}
+
+.link {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 150%;
+  color: v.$dark-gray;
+}

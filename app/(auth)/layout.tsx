@@ -1,15 +1,14 @@
-import Link from "next/link";
-import Logo from "../../components/Logo/Logo";
+import Link from "next/link"
+import Logo from "../../components/Logo/Logo"
 import scss from "./layout.module.scss"
 
 export default function AuthLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
-    <div>
-      
+    <div className={scss.container}>
       <div>
         <Link href="/">
           <Logo />
@@ -17,13 +16,19 @@ export default function AuthLayout({
         <div>
           <h2>
             Your medication,
-            <span><img src="/white-round-pill.png" alt="the pill" width={95} height={93}/></span> 
-            delivered Say goodbye to all <span className={scss.green}>your healthcare </span> worries with us
+            <span>
+              <img
+                src="/white-round-pill.png"
+                alt="the pill"
+                width={95}
+                height={93}
+              />
+            </span>
+            delivered Say goodbye to all{" "}
+            <span className={scss.green}>your healthcare </span> worries with us
           </h2>
         </div>
-        <div >
-        {children}
-        </div>
+        <div>{children}</div>
       </div>
 
       {/* <div>
@@ -33,5 +38,5 @@ export default function AuthLayout({
         />
       </div> */}
     </div>
-  );
+  )
 }
