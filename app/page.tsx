@@ -1,12 +1,13 @@
-
-import RegisterForm from "@/components/Auth/RegisterForm";
+import { redirect } from "next/navigation"
 export default function Home() {
+  const isAuth = false
+
+  if (!isAuth) {
+    redirect("/register")
+  }
   return (
-    <div >
-      <main>
-        <p>HomePage</p>
-        <RegisterForm/>
-      </main>
+    <div>
+      <p>HomePage</p>
     </div>
-  );
+  )
 }

@@ -82,11 +82,11 @@ export default function RegisterForm() {
           {...register("password")}
         />
       </Input>
-      <SubmitBtn type="submit">Register</SubmitBtn>
+      <SubmitBtn type="submit" className="scss.authBtn">Register</SubmitBtn>
       {serverError && <p>{serverError}</p>}
 
       <p>
-        Already have an account? <Link href="/login">Login</Link>
+         <Link href="/login">Already have an account?</Link>
       </p>
     </form>
   )
