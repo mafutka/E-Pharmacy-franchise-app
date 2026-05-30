@@ -14,7 +14,7 @@ export default function AuthLayout({
           <Logo />
         </Link>
         <div>
-          <h2>
+          <h2 className={scss.heading}>
             Your medication,
             <span>
               <img

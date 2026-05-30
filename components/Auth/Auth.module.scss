@@ -4,6 +4,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  min-height: 310px;
 }
 .authTop {
   display: flex;
@@ -13,10 +14,14 @@
 .authBottom {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 14px;
 }
 .authBtn {
   width: 100%;
+  border-radius: 60px;
+  padding: 13px ;
 }
 
 .link {

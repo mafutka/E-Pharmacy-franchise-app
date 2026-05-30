@@ -87,7 +87,7 @@ export default function RegisterForm() {
           </Input>
         </div>
         <div className={scss.authBottom}>
-          <SubmitBtn type="submit" className="scss.authBtn">
+          <SubmitBtn type="submit" className={scss.authBtn}>
             Register
           </SubmitBtn>
           {serverError && <p>{serverError}</p>}

@@ -76,7 +76,7 @@ export default function LoginForm() {
           </Input>
         </div>
         <div className={scss.authBottom}>
-          <SubmitBtn type="submit" className="scss.authBtn">
+          <SubmitBtn type="submit" className={scss.authBtn}>
             Log in
           </SubmitBtn>
 
