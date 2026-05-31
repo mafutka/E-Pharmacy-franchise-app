@@ -1,15 +1,40 @@
 @use "../../styles/abstracts/variables" as v;
 
-.container {
+.form {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   min-height: 310px;
 }
+@media (min-width: 768px) {
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 62px;
+  min-height: auto;
+  max-width: 554px;
+}
+}
+@media (min-width: 1440px) {
+.form {
+ 
+  gap: 62px;
+  min-height: auto;
+  min-width: 612px;
+}
+}
 .authTop {
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+@media (min-width: 768px) {
+  .authTop {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
 }
 .authBottom {
   display: flex;
@@ -17,6 +42,11 @@
   justify-content: center;
   align-items: center;
   gap: 14px;
+}
+@media (min-width: 768px) {
+  .authBottom {
+    max-width: 280px;
+  }
 }
 .authBtn {
   width: 100%;

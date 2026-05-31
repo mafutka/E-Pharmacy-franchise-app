@@ -1,6 +1,84 @@
 @use "../../styles/abstracts/variables" as v;
 
-.heading {}
+.container {
+  min-height: 800px;
+  position: relative;
+  padding-top: 25px;
+}
+@media (min-width: 768px) {
+  .container {
+    min-height: 1024px;
+  }
+}
+// @media (min-width: 1400px) {
+//   .container {
+//     min-height: auto;
+//   }
+// }
+.main {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 50px;
+  
+}
+@media (min-width: 768px) {
+  .main {
+    gap:  54px;
+      margin-top: 64px;
+    margin-bottom: 0;
+  }
+}
+@media (min-width: 1440px) {
+  .main {
+    flex-direction: row;
+    margin-top: 122px;
+    justify-content: flex-start;
+    align-items: end;
+  }
+}
+.heading {
+
+  line-height: 121%;
+}
+@media (min-width: 768px) {
+  .heading {
+
+    width: 614px;
+    font-size: 54px;
+    line-height: 111%;
+  }
+}
+@media (min-width: 768px) {
+  .heading {
+    margin-bottom: 0;
+  }
+}
+@media (min-width: 768px) {
+  .pill {
+    width: 179px;
+    height: 175px;
+  }
+}
 .green {
-    color: v.$green;
+  color: v.$green;
+}
+
+.bgImage {
+  position: absolute;
+  bottom: 0;
+  right: -20px;
+}
+@media (min-width: 768px) {
+  .bgSvg {
+    width: 277px;
+    height: 271px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .bgSvg {
+    width: 279px;
+    height: 257px;
+  }
 }

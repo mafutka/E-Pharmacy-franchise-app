@@ -9,15 +9,16 @@ export default function AuthLayout({
 }) {
   return (
     <div className={scss.container}>
-      <div>
-        <Link href="/">
-          <Logo />
-        </Link>
-        <div>
+      <Link href="/">
+        <Logo />
+      </Link>
+      <div className={scss.main}>
+        
           <h2 className={scss.heading}>
             Your medication,
             <span>
               <img
+                className={scss.pill}
                 src="/white-round-pill.png"
                 alt="the pill"
                 width={95}
@@ -27,16 +28,36 @@ export default function AuthLayout({
             delivered Say goodbye to all{" "}
             <span className={scss.green}>your healthcare </span> worries with us
           </h2>
-        </div>
+     
         <div>{children}</div>
       </div>
 
-      {/* <div>
-        <img
-          src="/auth-image.png"
-          alt="auth"
-        />
-      </div> */}
+      <div className={scss.bgImage}>
+        <svg
+          className={scss.bgSvg}
+          width="216"
+          height="168"
+          viewBox="0 0 216 168"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M48.8027 143.945C53.6821 131.868 67.4281 126.033 79.5051 130.912L263.816 205.378L246.146 249.113L61.8351 174.647C49.7581 169.767 43.9233 156.022 48.8027 143.945Z"
+            fill="#59B17A"
+            fill-opacity="0.08"
+          />
+          <path
+            d="M113.943 42.8674C118.823 30.7904 132.569 24.9556 144.646 29.835L328.956 104.301L311.286 148.036L126.976 73.5697C114.899 68.6903 109.064 54.9444 113.943 42.8674Z"
+            fill="#59B17A"
+            fill-opacity="0.08"
+          />
+          <path
+            d="M30.8349 73.1906C35.7144 61.1136 49.4603 55.2788 61.5373 60.1582L245.848 134.625L228.178 178.359L43.8673 103.893C31.7903 99.0135 25.9555 85.2676 30.8349 73.1906Z"
+            fill="#59B17A"
+            fill-opacity="0.08"
+          />
+        </svg>
+      </div>
     </div>
   )
 }

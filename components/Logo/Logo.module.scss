@@ -1,11 +1,23 @@
 @use "../../styles/abstracts/variables" as v;
 .logoWrapper {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+@media (min-width: 768px) {
+  .logoImg {
+    width: 44px;
+    height: 44px;
+  }
+}
+.logoText {
+  color: v.$black;
+  font-size: 16px;
 }
 
-.logoText {
-    color: v.$black;
-    font-size: 16px;
+@media (min-width: 768px) {
+  .logoText {
+    font-weight: 600;
+    font-size: 20px;
+  }
 }

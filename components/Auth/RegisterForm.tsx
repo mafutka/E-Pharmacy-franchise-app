@@ -63,39 +63,37 @@ export default function RegisterForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className={scss.container}>
-        <div className={scss.authTop}>
-          <Input error={errors.name}>
-            <input placeholder="User Name" {...register("name")} />
-          </Input>
+    <form className={scss.form} onSubmit={handleSubmit(onSubmit)}>
+      <div className={scss.authTop}>
+        <Input error={errors.name}>
+          <input placeholder="User Name" {...register("name")} />
+        </Input>
 
-          <Input error={errors.email}>
-            <input placeholder="Email address" {...register("email")} />
-          </Input>
+        <Input error={errors.email}>
+          <input placeholder="Email address" {...register("email")} />
+        </Input>
 
-          <Input error={errors.phoneNumber}>
-            <input placeholder="Phone number" {...register("phoneNumber")} />
-          </Input>
+        <Input error={errors.phoneNumber}>
+          <input placeholder="Phone number" {...register("phoneNumber")} />
+        </Input>
 
-          <Input error={errors.password}>
-            <input
-              type="password"
-              placeholder="Password"
-              {...register("password")}
-            />
-          </Input>
-        </div>
-        <div className={scss.authBottom}>
-          <SubmitBtn type="submit" className={scss.authBtn}>
-            Register
-          </SubmitBtn>
-          {serverError && <p>{serverError}</p>}
+        <Input error={errors.password}>
+          <input
+            type="password"
+            placeholder="Password"
+            {...register("password")}
+          />
+        </Input>
+      </div>
+      <div className={scss.authBottom}>
+        <SubmitBtn type="submit" className={scss.authBtn}>
+          Register
+        </SubmitBtn>
+        {serverError && <p>{serverError}</p>}
 
-          <Link href="/login" className={scss.link}>
-            Already have an account?
-          </Link>
-        </div>
+        <Link href="/login" className={scss.link}>
+          Already have an account?
+        </Link>
       </div>
     </form>
   )
