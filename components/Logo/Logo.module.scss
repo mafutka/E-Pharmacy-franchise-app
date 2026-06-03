@@ -4,6 +4,13 @@
   align-items: center;
   gap: 12px;
 }
+.footer {
+  .logoImg {
+    width: 32px;
+    height: 32px;
+    color: v.$white;
+  }
+}
 @media (min-width: 768px) {
   .logoImg {
     width: 44px;
@@ -13,6 +20,11 @@
 .logoText {
   color: v.$black;
   font-size: 16px;
+}
+.footer {
+  .logoText {
+    color: v.$white;
+  }
 }
 
 @media (min-width: 768px) {
