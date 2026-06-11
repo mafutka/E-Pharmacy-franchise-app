@@ -60,31 +60,29 @@ export default function LoginForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className={scss.container}>
-        <div className={scss.authTop}>
-          <Input error={errors.email}>
-            <input placeholder="Email address" {...register("email")} />
-          </Input>
+    <form className={scss.form} onSubmit={handleSubmit(onSubmit)}>
+      <div className={scss.authTop}>
+        <Input error={errors.email}>
+          <input placeholder="Email address" {...register("email")} />
+        </Input>
 
-          <Input error={errors.password}>
-            <input
-              type="password"
-              placeholder="Password"
-              {...register("password")}
-            />
-          </Input>
-        </div>
-        <div className={scss.authBottom}>
-          <SubmitBtn type="submit" className={scss.authBtn}>
-            Log in
-          </SubmitBtn>
+        <Input error={errors.password}>
+          <input
+            type="password"
+            placeholder="Password"
+            {...register("password")}
+          />
+        </Input>
+      </div>
+      <div className={scss.authBottom}>
+        <SubmitBtn type="submit" className={scss.authBtn}>
+          Log in
+        </SubmitBtn>
 
-          {serverError && <p>{serverError}</p>}
-          <Link href="/register" className={scss.link}>
-            Don’t have an account?
-          </Link>
-        </div>
+        {serverError && <p>{serverError}</p>}
+        <Link href="/register" className={scss.link}>
+          Don’t have an account?
+        </Link>
       </div>
     </form>
   )
