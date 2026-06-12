@@ -5,6 +5,7 @@ import { createShop } from "../../services/shopApi"
 import { useRouter } from "next/navigation"
 import Input from "../Input/Input"
 import SubmitBtn from "../SubmitBtn/SubmitBtn"
+import scss from "./CreateShop.module.scss"
 
 type FormState = {
   name: string
@@ -45,7 +46,7 @@ export default function CreateShopForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form className={scss.createForm} onSubmit={handleSubmit(onSubmit)}>
       <Input>
         <input placeholder="Shop Name" {...register("name")} />
       </Input>
