@@ -1,15 +1,12 @@
 @use "../../styles/abstracts/variables" as v;
+
 .logoWrapper {
   display: flex;
   align-items: center;
   gap: 12px;
 }
-.footer {
-  .logoImg {
-    width: 32px;
-    height: 32px;
-    color: v.$white;
-  }
+.logoImg {
+  background: transparent;
 }
 @media (min-width: 768px) {
   .logoImg {
