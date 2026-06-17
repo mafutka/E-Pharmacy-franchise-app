@@ -1,3 +1,5 @@
+import Header from "@/components/Header/Header"
+import Footer from "@/components/Footer/Footer"
 import scss from "./layout.module.scss"
 
 export default function Layout({
@@ -5,10 +7,12 @@ export default function Layout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-     return (
+  return (
     <html lang="en">
       <body className={scss.layout}>
-        <div >{children}</div>
+        <Header />
+        <main className={scss.content}>{children}</main>
+        <Footer />
       </body>
     </html>
   )

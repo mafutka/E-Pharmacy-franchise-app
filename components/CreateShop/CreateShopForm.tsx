@@ -46,57 +46,62 @@ export default function CreateShopForm() {
   }
 
   return (
-    <form className={scss.createForm} onSubmit={handleSubmit(onSubmit)}>
-      <Input>
-        <input placeholder="Shop Name" {...register("name")} />
-      </Input>
+    <>
+      <h3>Create your Shop</h3>
+      <p>
+        This information will be displayed publicly so be careful what you
+        share.
+      </p>
+      <form className={scss.createForm} onSubmit={handleSubmit(onSubmit)}>
+        <Input>
+          <input placeholder="Shop Name" {...register("name")} />
+        </Input>
 
-      <Input>
-        <input placeholder="Owner Name" {...register("owner")} />
-      </Input>
+        <Input>
+          <input placeholder="Owner Name" {...register("owner")} />
+        </Input>
 
-      <Input>
-        <input placeholder="Email" {...register("email")} />
-      </Input>
+        <Input>
+          <input placeholder="Email" {...register("email")} />
+        </Input>
 
-      <Input>
-        <input placeholder="Phone" {...register("phone")} />
-      </Input>
+        <Input>
+          <input placeholder="Phone" {...register("phone")} />
+        </Input>
 
-      <Input>
-        <input placeholder="Address" {...register("address")} />
-      </Input>
+        <Input>
+          <input placeholder="Address" {...register("address")} />
+        </Input>
 
-      <Input>
-        <input placeholder="City" {...register("city")} />
-      </Input>
+        <Input>
+          <input placeholder="City" {...register("city")} />
+        </Input>
 
-      <Input>
-        <input placeholder="Zip" {...register("zip")} />
-      </Input>
+        <Input>
+          <input placeholder="Zip" {...register("zip")} />
+        </Input>
 
-      <Input>
-        <input type="password" {...register("password")} />
-      </Input>
+        <Input>
+          <input type="password" {...register("password")} />
+        </Input>
 
-      <div>
-        <label>
-          <input type="radio" value="yes" {...register("hasDelivery")} />
-          Yes
-        </label>
+        <div>
+          <h4>Has own Delivery System?</h4>
 
-        <label>
-          <input type="radio" value="no" {...register("hasDelivery")} />
-          No
-        </label>
-      </div>
+          <label>
+            <input type="radio" value="yes" {...register("hasDelivery")} />
+            Yes
+          </label>
 
-      <input type="file" {...register("logo")} />
+          <label>
+            <input type="radio" value="no" {...register("hasDelivery")} />
+            No
+          </label>
+        </div>
 
-      {error && <p>{error}</p>}
-      <SubmitBtn>
-        <button type="submit">Create Account</button>
-      </SubmitBtn>
-    </form>
+        {error && <p>{error}</p>}
+        <SubmitBtn type="submit">Create Account</SubmitBtn>
+      </form>
+    </>
   )
 }
