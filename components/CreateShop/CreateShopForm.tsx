@@ -54,35 +54,42 @@ export default function CreateShopForm() {
       </p>
       <form className={scss.createForm} onSubmit={handleSubmit(onSubmit)}>
         <Input>
-          <input placeholder="Shop Name" {...register("name")} />
+          <label htmlFor="name">Shop Name</label>
+          <input id="name" placeholder="Enter text" {...register("name")} />
         </Input>
 
         <Input>
-          <input placeholder="Owner Name" {...register("owner")} />
+          <label htmlFor="owner">Shop Owner Name</label>
+          <input id="owner" placeholder="Enter text" {...register("owner")} />
         </Input>
 
         <Input>
-          <input placeholder="Email" {...register("email")} />
+          <label htmlFor="email">Email address</label>
+          <input id="email" placeholder="Enter text" {...register("email")} />
         </Input>
 
         <Input>
-          <input placeholder="Phone" {...register("phone")} />
+          <label htmlFor="phone">Phone Number</label>
+          <input id="phone" placeholder="Enter text" {...register("phone")} />
         </Input>
 
         <Input>
-          <input placeholder="Address" {...register("address")} />
+          <label htmlFor="address">Street address</label>
+          <input
+            id="address"
+            placeholder="Enter text"
+            {...register("address")}
+          />
         </Input>
 
         <Input>
-          <input placeholder="City" {...register("city")} />
+          <label htmlFor="city">City</label>
+          <input id="city" placeholder="Enter text" {...register("city")} />
         </Input>
 
         <Input>
-          <input placeholder="Zip" {...register("zip")} />
-        </Input>
-
-        <Input>
-          <input type="password" {...register("password")} />
+          <label htmlFor="zip">Zip / Postal</label>
+          <input id="zip" placeholder="Enter text" {...register("zip")} />
         </Input>
 
         <div>
