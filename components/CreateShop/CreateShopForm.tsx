@@ -53,28 +53,29 @@ export default function CreateShopForm() {
         share.
       </p>
       <form className={scss.createForm} onSubmit={handleSubmit(onSubmit)}>
+
+        <label htmlFor="name">Shop Name</label>
         <Input>
-          <label htmlFor="name">Shop Name</label>
           <input id="name" placeholder="Enter text" {...register("name")} />
         </Input>
 
+        <label htmlFor="owner">Shop Owner Name</label>
         <Input>
-          <label htmlFor="owner">Shop Owner Name</label>
           <input id="owner" placeholder="Enter text" {...register("owner")} />
         </Input>
 
+        <label htmlFor="email">Email address</label>
         <Input>
-          <label htmlFor="email">Email address</label>
           <input id="email" placeholder="Enter text" {...register("email")} />
         </Input>
 
+        <label htmlFor="phone">Phone Number</label>
         <Input>
-          <label htmlFor="phone">Phone Number</label>
           <input id="phone" placeholder="Enter text" {...register("phone")} />
         </Input>
 
+        <label htmlFor="address">Street address</label>
         <Input>
-          <label htmlFor="address">Street address</label>
           <input
             id="address"
             placeholder="Enter text"
@@ -82,13 +83,13 @@ export default function CreateShopForm() {
           />
         </Input>
 
+        <label htmlFor="city">City</label>
         <Input>
-          <label htmlFor="city">City</label>
           <input id="city" placeholder="Enter text" {...register("city")} />
         </Input>
 
+        <label htmlFor="zip">Zip / Postal</label>
         <Input>
-          <label htmlFor="zip">Zip / Postal</label>
           <input id="zip" placeholder="Enter text" {...register("zip")} />
         </Input>
 
@@ -107,7 +108,7 @@ export default function CreateShopForm() {
         </div>
 
         {error && <p>{error}</p>}
-        <SubmitBtn type="submit">Create Account</SubmitBtn>
+        <SubmitBtn className={scss.createBtn} type="submit">Create Account</SubmitBtn>
       </form>
     </>
   )
