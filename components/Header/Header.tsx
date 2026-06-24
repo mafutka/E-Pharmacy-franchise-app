@@ -13,12 +13,12 @@ export default function Header({ isAuth }: { isAuth: boolean }) {
       {isAuth && (
         <>
          <button
-            className={`${scss.burger} ${isOpen ? scss.open : ""}`}
-            onClick={() => setIsOpen(!isOpen)}
+            className={scss.burger}
+            onClick={() => setIsOpen(prev => !prev)}
           >
             ☰
           </button>
-        <nav className={scss.nav}>
+        <nav className={`${scss.nav} ${isOpen ? scss.open : ""}`}>
           <a>Shop</a>
           <a>Medicines</a>
           <a>Statistics</a>

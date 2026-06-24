@@ -46,14 +46,15 @@ export default function CreateShopForm() {
   }
 
   return (
-    <>
-      <h3>Create your Shop</h3>
-      <p>
-        This information will be displayed publicly so be careful what you
-        share.
-      </p>
+    <div className={scss.container}>
+      <div className={scss.top}>
+        <h3>Create your Shop</h3>
+        <p>
+          This information will be displayed publicly so be careful what you
+          share.
+        </p>
+      </div>
       <form className={scss.createForm} onSubmit={handleSubmit(onSubmit)}>
-
         <label htmlFor="name">Shop Name</label>
         <Input>
           <input id="name" placeholder="Enter text" {...register("name")} />
@@ -95,21 +96,17 @@ export default function CreateShopForm() {
 
         <div>
           <h4>Has own Delivery System?</h4>
-
-          <label>
-            <input type="radio" value="yes" {...register("hasDelivery")} />
-            Yes
-          </label>
-
-          <label>
-            <input type="radio" value="no" {...register("hasDelivery")} />
-            No
-          </label>
+          <input className={scss.radio} type="radio" value="yes" {...register("hasDelivery")} />
+          Yes
+          <input className={scss.radio} type="radio" value="no" {...register("hasDelivery")} />
+          No
         </div>
 
         {error && <p>{error}</p>}
-        <SubmitBtn className={scss.createBtn} type="submit">Create Account</SubmitBtn>
+        <SubmitBtn className={scss.createBtn} type="submit">
+          Create Account
+        </SubmitBtn>
       </form>
-    </>
+    </div>
   )
 }
