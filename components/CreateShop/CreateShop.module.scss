@@ -1,22 +1,81 @@
 @use "../../styles/abstracts/variables" as v;
 
 .container {
-    background-color: v.$white;
-    padding: 40px 20px;
-    border-radius: 27px;
+  background-color: v.$white;
+  padding: 40px 20px;
+  border-radius: 27px;
+}
+.top {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 40px;
 }
 .createForm {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
-.createForm label {
-    display: block;
-    margin-left: 16px;
-    margin-bottom: 8px;
+.createForm > label {
+  display: block;
+  margin-left: 16px;
+  margin-bottom: 8px;
+}
+.radioGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.radioButtons {
+    display: flex;
+    gap: 8px;
+}
+.radioLabel {
+ display: inline-flex;
+ align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  color: v.$gray;
+}
+.radioLabel input {
+  display: none;
+}
+.customRadio {
+  width: 20px;
+  height: 20px;
+  min-width: 20px;   
+  min-height: 20px; 
+  border: 2px solid v.$gray;
+  border-radius: 50%;
+  flex-shrink: 0;
+  position: relative;
 }
 
+.customRadio::after {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background: v.$green;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: 0.2s;
+}
+
+.radioLabel input:checked + .customRadio {
+  border-color: v.$green;
+}
+
+.radioLabel input:checked + .customRadio::after {
+  transform: translate(-50%, -50%) scale(1);
+}
+.radioLabel input:checked + .customRadio + .text {
+  color: v.$black;
+}
 .createBtn {
-    padding: 13px 26px;
-    border-radius: 60px;
+  padding: 13px 26px;
+  border-radius: 60px;
+  width: fit-content;
 }
