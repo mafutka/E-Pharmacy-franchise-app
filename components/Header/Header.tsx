@@ -7,7 +7,7 @@ import scss from "./Header.module.scss"
 export default function Header({ isAuth }: { isAuth: boolean }) {
   const [isOpen, setIsOpen] = useState(false)
   return (
-    <header>
+    <header className={scss.header}>
       <Logo />
      
       {isAuth && (
