@@ -46,87 +46,81 @@ export default function CreateShopForm() {
   }
 
   return (
-    <div className={scss.container}>
-      <div className={scss.top}>
-        <h3>Create your Shop</h3>
-        <p>
-          This information will be displayed publicly so be careful what you
-          share.
-        </p>
-      </div>
-      <form className={scss.createForm} onSubmit={handleSubmit(onSubmit)}>
+  <div className={scss.container}>
+    <div className={scss.top}>
+      <h3>Create your Shop</h3>
+      <p>
+        This information will be displayed publicly so be careful what you
+        share.
+      </p>
+    </div>
+
+    <form className={scss.createForm} onSubmit={handleSubmit(onSubmit)}>
+
+      <div className={scss.middle}>
         <label htmlFor="name">Shop Name</label>
         <Input>
-          <input id="name" placeholder="Enter text" {...register("name")} />
+          <input id="name" {...register("name")} />
         </Input>
 
         <label htmlFor="owner">Shop Owner Name</label>
         <Input>
-          <input id="owner" placeholder="Enter text" {...register("owner")} />
+          <input id="owner" {...register("owner")} />
         </Input>
 
         <label htmlFor="email">Email address</label>
         <Input>
-          <input id="email" placeholder="Enter text" {...register("email")} />
+          <input id="email" {...register("email")} />
         </Input>
 
         <label htmlFor="phone">Phone Number</label>
         <Input>
-          <input id="phone" placeholder="Enter text" {...register("phone")} />
+          <input id="phone" {...register("phone")} />
         </Input>
 
         <label htmlFor="address">Street address</label>
         <Input>
-          <input
-            id="address"
-            placeholder="Enter text"
-            {...register("address")}
-          />
+          <input id="address" {...register("address")} />
         </Input>
 
         <label htmlFor="city">City</label>
         <Input>
-          <input id="city" placeholder="Enter text" {...register("city")} />
+          <input id="city" {...register("city")} />
         </Input>
 
         <label htmlFor="zip">Zip / Postal</label>
         <Input>
-          <input id="zip" placeholder="Enter text" {...register("zip")} />
+          <input id="zip" {...register("zip")} />
         </Input>
+      </div>
 
+      <div className={scss.bottom}>
         <div className={scss.radioGroup}>
           <h4>Has own Delivery System?</h4>
-          <div className={scss.radioButtons}>
 
-          <label className={scss.radioLabel}>
-            <input
-              className={scss.radio}
-              type="radio"
-              value="yes"
-              {...register("hasDelivery")}
-            />
-            <span className={scss.customRadio}></span>
-            <span className={scss.text}>Yes</span>
-            
-          </label>
-          <label className={scss.radioLabel}>
-            <input
-              className={scss.radio}
-              type="radio"
-              value="no"
-              {...register("hasDelivery")}
-            />
-            <span className={scss.customRadio}></span>
-           <span className={scss.text}>No</span> 
-          </label>
+          <div className={scss.radioButtons}>
+            <label className={scss.radioLabel}>
+              <input type="radio" value="yes" {...register("hasDelivery")} />
+              <span className={scss.customRadio}></span>
+              <span className={scss.text}>Yes</span>
+            </label>
+
+            <label className={scss.radioLabel}>
+              <input type="radio" value="no" {...register("hasDelivery")} />
+              <span className={scss.customRadio}></span>
+              <span className={scss.text}>No</span>
+            </label>
           </div>
         </div>
 
         {error && <p>{error}</p>}
+
         <SubmitBtn className={scss.createBtn} type="submit">
           Create Account
         </SubmitBtn>
-      </form>
-    </div>
-  )
+      </div>
+
+    </form>
+  </div>
+)
 }
