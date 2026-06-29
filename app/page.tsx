@@ -7,7 +7,7 @@ export default function Home() {
   }
   return (
     <div>
-      <p>HomePage</p>
+      <p>Medicine store main page</p>
     </div>
   )
 }
