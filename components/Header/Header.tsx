@@ -3,6 +3,7 @@
 import { useState } from "react"
 import Logo from "../Logo/Logo"
 import scss from "./Header.module.scss"
+import Link from "next/link"
 
 export default function Header({ isAuth }: { isAuth: boolean }) {
   const [isOpen, setIsOpen] = useState(false)
@@ -19,9 +20,9 @@ export default function Header({ isAuth }: { isAuth: boolean }) {
             ☰
           </button>
         <nav className={`${scss.nav} ${isOpen ? scss.open : ""}`}>
-          <a>Shop</a>
-          <a>Medicines</a>
-          <a>Statistics</a>
+          <Link href="/shop">Shop</Link>
+          <Link href="/medicine">Medicines</Link>
+          <Link href="/statistics">Statistics</Link>
           <button>Logout</button>
         </nav>
         </>
