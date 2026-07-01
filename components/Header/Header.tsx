@@ -8,31 +8,44 @@ import { usePathname } from "next/navigation"
 
 export default function Header({ isAuth }: { isAuth: boolean }) {
   const [isOpen, setIsOpen] = useState(false)
-  const pathname = usePathname();
-  
+  const pathname = usePathname()
+
   return (
     <header className={scss.header}>
       <Logo />
-     
+
       {isAuth && (
         <>
-         <button
+          <button
             className={scss.burger}
-            onClick={() => setIsOpen(prev => !prev)}
+            onClick={() => setIsOpen((prev) => !prev)}
           >
             ☰
           </button>
-        <nav className={`${scss.nav} ${isOpen ? scss.open : ""}`}>
-          <Link className={`${scss.navBtn} ${
-    pathname === "/shop" ? scss.active : ""
-  }`} href="/shop">Shop</Link>
-          <Link className={scss.navBtn} href="/medicine">Medicines</Link>
-          <Link className={scss.navBtn} href="/statistics">Statistics</Link>
-          <button>Logout</button>
-        </nav>
-        {isOpen && (
-          <div className={scss.overlay} onClick={() => setIsOpen(false)}/>
-        )}
+          <nav className={`${scss.nav} ${isOpen ? scss.open : ""}`}>
+            <Link
+              className={`${scss.navBtn} ${
+                pathname === "/shop" ? scss.active : ""
+              }`}
+              href="/shop"
+            >
+              Shop
+            </Link>
+            <Link className={`${scss.navBtn} ${
+                pathname === "/shop" ? scss.active : ""
+              }`} href="/medicine">
+              Medicines
+            </Link>
+            <Link className={`${scss.navBtn} ${
+                pathname === "/shop" ? scss.active : ""
+              }`} href="/statistics">
+              Statistics
+            </Link>
+            <button>Logout</button>
+          </nav>
+          {isOpen && (
+            <div className={scss.overlay} onClick={() => setIsOpen(false)} />
+          )}
         </>
       )}
     </header>

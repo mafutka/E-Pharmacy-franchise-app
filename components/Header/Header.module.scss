@@ -21,14 +21,16 @@
 }
 
 .nav {
-  display: none;
-  position: fixed;
-  top: 0;
-  right: -334px;
-  height: 100vh;
-  background: v.$green;
   display: flex;
   flex-direction: column;
+
+  position: fixed;
+  top: 0;
+  right: -100%;
+
+  width: 40vw;
+  height: 100vh;
+  background: v.$green;
   transition: right 0.3s ease;
   z-index: 1000;
 }
@@ -65,10 +67,14 @@
   transform: scale(0.98);
 }
 
-.nav {
-  position: static;
-  display: flex;
-  flex-direction: row;
-  gap: 20px;
-  background: none;
+@media (min-width: 768px) {
+  .nav {
+    position: static;
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    right: auto;
+    gap: 20px;
+    background: none;
+  }
 }
