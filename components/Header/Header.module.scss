@@ -13,6 +13,10 @@
   background: none;
   border: none;
 }
+.burgerIcon {
+  fill: none;
+  stroke: v.$green;
+}
 
 @media (min-width: 1440px) {
   .burger {
@@ -26,17 +30,18 @@
 
   position: fixed;
   top: 0;
-  right: -100%;
+  right: 0;
 
   width: 40vw;
   height: 100vh;
   background: v.$green;
+  transform: translateX(100%);
   transition: right 0.3s ease;
   z-index: 1000;
 }
 
 .open {
-  right: 0;
+   transform: translateX(0);
 }
 .overlay {
   position: fixed;
@@ -45,6 +50,17 @@
   z-index: 999;
 }
 
+.closeBtn {
+  background-color: transparent;
+  border: none;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+}
+.icon {
+fill: none;
+stroke: v.$white;
+}
 .navBtn {
   display: inline-block;
   padding: 10px 16px;
@@ -67,7 +83,7 @@
   transform: scale(0.98);
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1440px) {
   .nav {
     position: static;
     display: flex;

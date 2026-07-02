@@ -20,9 +20,19 @@ export default function Header({ isAuth }: { isAuth: boolean }) {
             className={scss.burger}
             onClick={() => setIsOpen((prev) => !prev)}
           >
-            ☰
+            <svg className={scss.burgerIcon} width="32" height="26">
+                <use href="/sprite.svg#icon-burger" />
+              </svg>
           </button>
+
           <nav className={`${scss.nav} ${isOpen ? scss.open : ""}`}>
+
+            <button className={scss.closeBtn} onClick={() => setIsOpen(false)}>
+              <svg className={scss.icon} width="18" height="18">
+                <use href="/sprite.svg#icon-x" />
+              </svg>
+            </button>
+
             <Link
               className={`${scss.navBtn} ${
                 pathname === "/shop" ? scss.active : ""
@@ -31,14 +41,20 @@ export default function Header({ isAuth }: { isAuth: boolean }) {
             >
               Shop
             </Link>
-            <Link className={`${scss.navBtn} ${
+            <Link
+              className={`${scss.navBtn} ${
                 pathname === "/shop" ? scss.active : ""
-              }`} href="/medicine">
+              }`}
+              href="/medicine"
+            >
               Medicines
             </Link>
-            <Link className={`${scss.navBtn} ${
+            <Link
+              className={`${scss.navBtn} ${
                 pathname === "/shop" ? scss.active : ""
-              }`} href="/statistics">
+              }`}
+              href="/statistics"
+            >
               Statistics
             </Link>
             <button>Logout</button>
