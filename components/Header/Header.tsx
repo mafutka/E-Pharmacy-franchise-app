@@ -21,42 +21,42 @@ export default function Header({ isAuth }: { isAuth: boolean }) {
             onClick={() => setIsOpen((prev) => !prev)}
           >
             <svg className={scss.burgerIcon} width="32" height="26">
-                <use href="/sprite.svg#icon-burger" />
-              </svg>
+              <use href="/sprite.svg#icon-burger" />
+            </svg>
           </button>
 
           <nav className={`${scss.nav} ${isOpen ? scss.open : ""}`}>
-
             <button className={scss.closeBtn} onClick={() => setIsOpen(false)}>
               <svg className={scss.icon} width="18" height="18">
                 <use href="/sprite.svg#icon-x" />
               </svg>
             </button>
-
-            <Link
-              className={`${scss.navBtn} ${
-                pathname === "/shop" ? scss.active : ""
-              }`}
-              href="/shop"
-            >
-              Shop
-            </Link>
-            <Link
-              className={`${scss.navBtn} ${
-                pathname === "/shop" ? scss.active : ""
-              }`}
-              href="/medicine"
-            >
-              Medicines
-            </Link>
-            <Link
-              className={`${scss.navBtn} ${
-                pathname === "/shop" ? scss.active : ""
-              }`}
-              href="/statistics"
-            >
-              Statistics
-            </Link>
+            <div className={scss.menuGroup}>
+              <Link
+                className={`${scss.navBtn} ${
+                  pathname === "/shop" ? scss.active : ""
+                }`}
+                href="/shop"
+              >
+                <span>Shop</span>
+              </Link>
+              <Link
+                className={`${scss.navBtn} ${
+                  pathname === "/shop" ? scss.active : ""
+                }`}
+                href="/medicine"
+              >
+                <span>Medicines</span>
+              </Link>
+              <Link
+                className={`${scss.navBtn} ${
+                  pathname === "/shop" ? scss.active : ""
+                }`}
+                href="/statistics"
+              >
+                <span>Statistics</span>
+              </Link>
+            </div>
             <button>Logout</button>
           </nav>
           {isOpen && (

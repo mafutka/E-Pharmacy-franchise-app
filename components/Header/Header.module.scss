@@ -36,7 +36,7 @@
   height: 100vh;
   background: v.$green;
   transform: translateX(100%);
-  transition: right 0.3s ease;
+  transition: transform 0.3s ease;
   z-index: 1000;
 }
 
@@ -62,25 +62,30 @@ fill: none;
 stroke: v.$white;
 }
 .navBtn {
-  display: inline-block;
-  padding: 10px 16px;
+  position: relative;
+  display: block;
+  padding: 12px 20px;
 
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  border-radius: 999px;
 
   background-color: white;
   color: #333;
 
-  transition: all 0.2s ease;
+  text-decoration: none;
 }
 
-.navBtn:hover {
-  background-color: #f5f5f5;
-  border-color: #999;
-}
+.active {
+  background:v.$white;
+  padding: 6px;
 
-.navBtn:active {
-  transform: scale(0.98);
+  span {
+    display: block;
+    padding: 10px 20px;
+    border-radius: 999px;
+
+    background: v.$green;
+    color: v.$white;
+  }
 }
 
 @media (min-width: 1440px) {
