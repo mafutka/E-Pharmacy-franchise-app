@@ -4,6 +4,7 @@ import { useState } from "react"
 import Logo from "../Logo/Logo"
 import scss from "./Header.module.scss"
 import Link from "next/link"
+import SubmitBtn from "../SubmitBtn/SubmitBtn"
 import { usePathname } from "next/navigation"
 
 export default function Header({ isAuth }: { isAuth: boolean }) {
@@ -57,9 +58,8 @@ export default function Header({ isAuth }: { isAuth: boolean }) {
                 <span>Statistics</span>
               </Link>
             </div>
-            <div className={scss.bottom}>
-              <button className={scss.logoutBtn}>Logout</button>
-            </div>
+
+            <SubmitBtn className={scss.logoutBtn}>Logout</SubmitBtn>
           </nav>
           {isOpen && (
             <div className={scss.overlay} onClick={() => setIsOpen(false)} />

@@ -27,18 +27,30 @@
 .nav {
   display: flex;
   flex-direction: column;
-justify-content: center;
-
+justify-content: space-between;
+align-items: center;
+box-sizing: border-box;
   position: fixed;
   top: 0;
   right: 0;
-
   width: 40vw;
   height: 100vh;
+  padding: 40px 38px;
   background: v.$green;
   transform: translateX(100%);
   transition: transform 0.3s ease;
   z-index: 1000;
+}
+@media (min-width: 1440px) {
+  .nav {
+    position: static;
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    right: auto;
+    gap: 20px;
+    background: none;
+  }
 }
 
 .open {
@@ -65,16 +77,23 @@ justify-content: center;
 fill: none;
 stroke: v.$white;
 }
+.menuGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  margin-top: 220px;
+}
 .navBtn {
   position: relative;
-  display: block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 12px 20px;
-
-  border-radius: 999px;
-
-  background-color: white;
-  color: #333;
-
+  border-radius: 60px;
+  background-color: v.$white;
+  color: v.$dark-gray;
+  font-weight: 400;
   text-decoration: none;
 }
 
@@ -92,14 +111,11 @@ stroke: v.$white;
   }
 }
 
-@media (min-width: 1440px) {
-  .nav {
-    position: static;
-    display: flex;
-    flex-direction: row;
-    height: auto;
-    right: auto;
-    gap: 20px;
-    background: none;
-  }
+
+.logoutBtn {
+  padding: 13px 26px;
+  border-radius: 60px;
+  width: fit-content;
+  border: 1px solid rgba(241, 241, 241, 0.5) !important;
 }
+
