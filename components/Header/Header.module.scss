@@ -27,6 +27,7 @@
 .nav {
   display: flex;
   flex-direction: column;
+justify-content: center;
 
   position: fixed;
   top: 0;
@@ -51,6 +52,9 @@
 }
 
 .closeBtn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
   background-color: transparent;
   border: none;
   width: 32px;

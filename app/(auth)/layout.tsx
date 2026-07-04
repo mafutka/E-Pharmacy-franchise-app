@@ -8,7 +8,7 @@ export default function AuthLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className={scss.container}>
+    <div className={`container ${scss.container}`}>
       <Link href="/">
         <Logo />
       </Link>

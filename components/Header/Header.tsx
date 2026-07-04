@@ -42,7 +42,7 @@ export default function Header({ isAuth }: { isAuth: boolean }) {
               </Link>
               <Link
                 className={`${scss.navBtn} ${
-                  pathname === "/shop" ? scss.active : ""
+                  pathname === "/medicine" ? scss.active : ""
                 }`}
                 href="/medicine"
               >
@@ -50,14 +50,16 @@ export default function Header({ isAuth }: { isAuth: boolean }) {
               </Link>
               <Link
                 className={`${scss.navBtn} ${
-                  pathname === "/shop" ? scss.active : ""
+                  pathname === "/statistics" ? scss.active : ""
                 }`}
                 href="/statistics"
               >
                 <span>Statistics</span>
               </Link>
             </div>
-            <button>Logout</button>
+            <div className={scss.bottom}>
+              <button className={scss.logoutBtn}>Logout</button>
+            </div>
           </nav>
           {isOpen && (
             <div className={scss.overlay} onClick={() => setIsOpen(false)} />
