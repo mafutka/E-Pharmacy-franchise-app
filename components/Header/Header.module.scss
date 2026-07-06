@@ -27,9 +27,9 @@
 .nav {
   display: flex;
   flex-direction: column;
-justify-content: space-between;
-align-items: center;
-box-sizing: border-box;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
   position: fixed;
   top: 0;
   right: 0;
@@ -54,7 +54,7 @@ box-sizing: border-box;
 }
 
 .open {
-   transform: translateX(0);
+  transform: translateX(0);
 }
 .overlay {
   position: fixed;
@@ -74,8 +74,8 @@ box-sizing: border-box;
   padding: 0;
 }
 .icon {
-fill: none;
-stroke: v.$white;
+  fill: none;
+  stroke: v.$white;
 }
 .menuGroup {
   display: flex;
@@ -98,7 +98,7 @@ stroke: v.$white;
 }
 
 .active {
-  background:v.$white;
+  background: v.$white;
   padding: 6px;
 
   span {
@@ -111,11 +111,9 @@ stroke: v.$white;
   }
 }
 
-
 .logoutBtn {
   padding: 13px 26px;
   border-radius: 60px;
   width: fit-content;
   border: 1px solid rgba(241, 241, 241, 0.5) !important;
 }
-
