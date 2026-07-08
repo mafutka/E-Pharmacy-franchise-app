@@ -2,14 +2,24 @@
 
 import { useState } from "react"
 import Logo from "../Logo/Logo"
-import scss from "./Header.module.scss"
+import { useRouter } from "next/navigation"
+import { useAuthStore } from "@/store/authStore"
 import Link from "next/link"
 import SubmitBtn from "../SubmitBtn/SubmitBtn"
 import { usePathname } from "next/navigation"
 
+import scss from "./Header.module.scss"
+
 export default function Header({ isAuth }: { isAuth: boolean }) {
-  const [isOpen, setIsOpen] = useState(false)
-  const pathname = usePathname()
+  const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+   const router = useRouter();
+  const logout = useAuthStore((s) => s.logout);
+
+const handleLogout = async () => {
+  await logout();
+  router.replace("/login");
+};
 
   return (
     <header className={scss.header}>
@@ -59,7 +69,7 @@ export default function Header({ isAuth }: { isAuth: boolean }) {
               </Link>
             </div>
 
-            <SubmitBtn className={scss.logoutBtn}>Logout</SubmitBtn>
+            <SubmitBtn className={scss.logoutBtn} onClick={handleLogout}>Logout</SubmitBtn>
           </nav>
           {isOpen && (
             <div className={scss.overlay} onClick={() => setIsOpen(false)} />

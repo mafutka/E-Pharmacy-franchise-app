@@ -30,6 +30,6 @@ export const getCurrentUser = async () => {
   return res.data;
 };
 
-export const logoutUser = () => {
-  localStorage.removeItem("token");
+export const logoutUser = async () => {
+  await api.post("/user/logout");
 };

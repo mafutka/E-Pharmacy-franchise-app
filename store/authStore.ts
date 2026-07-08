@@ -1,6 +1,7 @@
 import {create} from "zustand";
 import type { AuthState } from "@/types/auth";
 import {getCurrentUser} from "@/services/authApi"
+import { logoutUser } from "@/services/authApi";
 
 export const useAuthStore = create<AuthState>((set) => ({
   token: null,
@@ -16,10 +17,16 @@ export const useAuthStore = create<AuthState>((set) => ({
     set({ token });
   },
 
-  logout: () => {
-    localStorage.removeItem("token");
-    set({ token: null });
-  },
+logout: async () => {
+  try {
+    await logoutUser(); 
+  } catch (e) {
+    console.error(e);
+  }
+
+  localStorage.removeItem("token");
+  set({ token: null });
+},
 
   initAuth: async () => {
     const token = localStorage.getItem("token");
