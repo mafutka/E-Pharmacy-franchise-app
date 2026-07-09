@@ -5,3 +5,8 @@ export const createShop = async (formData: FormData) => {
   return res.data;
 };
 
+export const getMyShop = async () => {
+  const res = await api.get("/shop/my");
+  return res.data;
+};
+
