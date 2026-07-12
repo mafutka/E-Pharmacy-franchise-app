@@ -3,22 +3,11 @@ import { useForm } from "react-hook-form"
 import { useState } from "react"
 import { createShop } from "../../services/shopApi"
 import { useRouter } from "next/navigation"
+import { FormState } from "@/types/ui"
 import Input from "../Input/Input"
 import SubmitBtn from "../SubmitBtn/SubmitBtn"
 import scss from "./CreateShop.module.scss"
 
-type FormState = {
-  name: string
-  owner: string
-  email: string
-  phone: string
-  address: string
-  city: string
-  zip: string
-  password: string
-  hasDelivery: string
-  logo: FileList
-}
 
 export default function CreateShopForm() {
   const { register, handleSubmit } = useForm<FormState>()
@@ -46,19 +35,18 @@ export default function CreateShopForm() {
   }
 
   return (
-  <div className={scss.container}>
-    <div className={scss.top}>
-      <h3>Create your Shop</h3>
-      <p>
-        This information will be displayed publicly so be careful what you
-        share.
-      </p>
-    </div>
+    <div className={scss.container}>
+      <div className={scss.top}>
+        <h3>Create your Shop</h3>
+        <p>
+          This information will be displayed publicly so be careful what you
+          share.
+        </p>
+      </div>
 
-    <form className={scss.createForm} onSubmit={handleSubmit(onSubmit)}>
-
-      <div className={scss.middle}>
-        <label htmlFor="name">Shop Name</label>
+      <form className={scss.createForm} onSubmit={handleSubmit(onSubmit)}>
+        <div className={scss.middle}>
+           <label htmlFor="name">Shop Name</label>
         <Input>
           <input id="name" {...register("name")} />
         </Input>
@@ -92,35 +80,34 @@ export default function CreateShopForm() {
         <Input>
           <input id="zip" {...register("zip")} />
         </Input>
-      </div>
-
-      <div className={scss.bottom}>
-        <div className={scss.radioGroup}>
-          <h4>Has own Delivery System?</h4>
-
-          <div className={scss.radioButtons}>
-            <label className={scss.radioLabel}>
-              <input type="radio" value="yes" {...register("hasDelivery")} />
-              <span className={scss.customRadio}></span>
-              <span className={scss.text}>Yes</span>
-            </label>
-
-            <label className={scss.radioLabel}>
-              <input type="radio" value="no" {...register("hasDelivery")} />
-              <span className={scss.customRadio}></span>
-              <span className={scss.text}>No</span>
-            </label>
-          </div>
         </div>
 
-        {error && <p>{error}</p>}
+        <div className={scss.bottom}>
+          <div className={scss.radioGroup}>
+            <h4>Has own Delivery System?</h4>
 
-        <SubmitBtn className={scss.createBtn} type="submit">
-          Create Account
-        </SubmitBtn>
-      </div>
+            <div className={scss.radioButtons}>
+              <label className={scss.radioLabel}>
+                <input type="radio" value="yes" {...register("hasDelivery")} />
+                <span className={scss.customRadio}></span>
+                <span className={scss.text}>Yes</span>
+              </label>
 
-    </form>
-  </div>
-)
+              <label className={scss.radioLabel}>
+                <input type="radio" value="no" {...register("hasDelivery")} />
+                <span className={scss.customRadio}></span>
+                <span className={scss.text}>No</span>
+              </label>
+            </div>
+          </div>
+
+          {error && <p>{error}</p>}
+
+          <SubmitBtn className={scss.createBtn} type="submit">
+            Create Account
+          </SubmitBtn>
+        </div>
+      </form>
+    </div>
+  )
 }
