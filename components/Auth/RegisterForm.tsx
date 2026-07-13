@@ -7,6 +7,7 @@ import { RegisterFormData } from "@/types/auth"
 import { registerSchema } from "@/validation/authSchemas"
 import { ValidationError, ValidationErrorItem } from "joi"
 import { registerUser } from "@/services/authApi"
+import { getMyShop } from "@/services/shopApi" // ✅ ДОДАЛИ
 import { useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
@@ -16,7 +17,6 @@ import scss from "./Auth.module.scss"
 export default function RegisterForm() {
   const { register, handleSubmit } = useForm<RegisterFormData>()
   const router = useRouter()
-
   const setToken = useAuthStore((s) => s.setToken)
 
   const [errors, setErrors] = useState<Record<string, string>>({})
@@ -37,7 +37,7 @@ export default function RegisterForm() {
         (err: ValidationErrorItem) => {
           const field = err.path[0] as string
           formattedErrors[field] = err.message
-        },
+        }
       )
 
       setErrors(formattedErrors)
@@ -49,7 +49,14 @@ export default function RegisterForm() {
 
       if (res.token) {
         setToken(res.token)
-        router.push("/create-shop")
+
+        const shop = await getMyShop().catch(() => null)
+
+        if (shop) {
+          router.push("/shop")
+        } else {
+          router.push("/create-shop")
+        }
       } else {
         router.push("/login")
       }
@@ -85,10 +92,12 @@ export default function RegisterForm() {
           />
         </Input>
       </div>
+
       <div className={scss.authBottom}>
         <SubmitBtn type="submit" className={scss.authBtn}>
           Register
         </SubmitBtn>
+
         {serverError && <p>{serverError}</p>}
 
         <Link href="/login" className={scss.link}>

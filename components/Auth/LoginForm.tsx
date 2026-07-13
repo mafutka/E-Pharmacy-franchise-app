@@ -7,6 +7,7 @@ import { loginSchema } from "@/validation/authSchemas"
 import { LoginFormData } from "@/types/auth"
 import { ValidationErrorItem } from "joi"
 import { loginUser } from "@/services/authApi"
+import { getMyShop } from "@/services/shopApi"
 import { useState } from "react"
 import Link from "next/link"
 import { useAuthStore } from "@/store/authStore"
@@ -47,9 +48,15 @@ export default function LoginForm() {
     try {
       const res = await loginUser(data)
 
-      setToken(res.token)
+     setToken(res.token)
 
-      router.push("/create-shop")
+const shop = await getMyShop().catch(() => null)
+
+if (shop) {
+  router.push("/shop")
+} else {
+  router.push("/create-shop")
+}
     } catch (err: unknown) {
       if (err instanceof Error) {
         setServerError(err.message)
