@@ -4,6 +4,7 @@ import { useState } from "react"
 import { createShop } from "../../services/shopApi"
 import { useRouter } from "next/navigation"
 import { FormState } from "@/types/ui"
+import { AxiosError } from "axios"
 import Input from "../Input/Input"
 import SubmitBtn from "../SubmitBtn/SubmitBtn"
 import scss from "./CreateShop.module.scss"
@@ -29,9 +30,14 @@ export default function CreateShopForm() {
 
       await createShop(formData)
       router.push("/shop")
-    } catch {
-      setError("Failed to create shop")
-    }
+    } catch (err: unknown) {
+  if (err instanceof AxiosError) {
+    console.log(err.response?.data)
+    setError(err.response?.data?.message || "Failed to create shop")
+  } else {
+    setError("Unexpected error")
+  }
+}
   }
 
   return (
