@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react"
 import { getMyShop } from "@/services/shopApi"
 import { Shop } from "@/types/shop"
+import SubmitBtn from "@/components/SubmitBtn/SubmitBtn"
+import scss from "./page.module.scss"
 
 export default function ShopPage() {
   const [shop, setShop] = useState<Shop | null>(null)
@@ -20,14 +22,27 @@ export default function ShopPage() {
   if (!shop) return <p>No shop found</p>
 
   return (
-    <div>
+    <div className={scss.info}>
       <h1>{shop.name}</h1>
-      <p>Owner: {shop.owner}</p>
-      <p>Phone: {shop.phone}</p>
-      <p>Address: {shop.address}</p>
-
-      <button>Edit data</button>
-      <button>Add medicine</button>
+      <p>
+        Owner: <span>{shop.owner}</span>
+      </p>
+      <div className={scss.contacts}>
+        <div>
+          <svg className={scss.icon}>
+            <use href="/sprite.svg#icon-map-pin" />
+          </svg>
+          <span>{shop.address}</span>
+        </div>
+        <div>
+          <svg className={scss.icon}>
+            <use href="/sprite.svg#icon-phone" />
+          </svg>{" "}
+          <span>{shop.phone}</span>
+        </div>
+      </div>
+      <SubmitBtn>Edit data</SubmitBtn>
+      <SubmitBtn>Add medicine</SubmitBtn>
     </div>
   )
 }

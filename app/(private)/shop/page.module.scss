@@ -1,0 +1,9 @@
+@use "../../../styles/abstracts/variables" as v;
+
+.info {}
+.icon {
+    width: 18px;
+    height: 18px;
+    color: v.$green;
+
+}
