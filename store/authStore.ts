@@ -1,4 +1,5 @@
 import {create} from "zustand";
+import { persist } from "zustand/middleware";
 import type { AuthState } from "@/types/auth";
 import {getCurrentUser} from "@/services/authApi"
 import { logoutUser } from "@/services/authApi";

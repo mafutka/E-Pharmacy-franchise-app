@@ -1,14 +1,20 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { useRouter } from "next/router"
 import { getMyShop } from "@/services/shopApi"
 import { Shop } from "@/types/shop"
+import AddMedicineModal from "@/components/AddMedicineModal/AddMedicineModal"
 import SubmitBtn from "@/components/SubmitBtn/SubmitBtn"
 import scss from "./page.module.scss"
 
 export default function ShopPage() {
   const [shop, setShop] = useState<Shop | null>(null)
   const [loading, setLoading] = useState(true)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [tab, setTab] = useState<"shop" | "all">("shop")
+
+  const router = useRouter()
 
   useEffect(() => {
     getMyShop()
@@ -41,8 +47,15 @@ export default function ShopPage() {
           <span>{shop.phone}</span>
         </div>
       </div>
-      <SubmitBtn>Edit data</SubmitBtn>
-      <SubmitBtn>Add medicine</SubmitBtn>
+      <SubmitBtn onClick={() => router.push("/edit-shop")}>Edit data</SubmitBtn>
+      <SubmitBtn onClick={() => setIsModalOpen(true)}>Add medicine</SubmitBtn>
+
+       {isModalOpen && (
+      <AddMedicineModal onClose={() => setIsModalOpen(false)} />
+    )}
+
+      <button onClick={() => setTab("shop")}>Drug store</button>
+<button onClick={() => setTab("all")}>All medicine</button>
     </div>
   )
 }
