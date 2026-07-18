@@ -1,12 +1,113 @@
+"use client"
+
+import { useState } from "react"
+import { createProduct } from "@/services/productApi"
+
 type Props = {
   onClose: () => void
+  shopId: string
+  onSuccess?: () => void 
 }
 
-export default function AddMedicineModal({ onClose }: Props) {
+export default function AddMedicineModal({
+  onClose,
+  shopId,
+  onSuccess,
+}: Props) {
+  const [name, setName] = useState("")
+  const [price, setPrice] = useState("")
+  const [category, setCategory] = useState("")
+  const [brand, setBrand] = useState("")
+  const [stock, setStock] = useState("1")
+  const [file, setFile] = useState<File | null>(null)
+  const [loading, setLoading] = useState(false)
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+
+    try {
+      setLoading(true)
+
+      const formData = new FormData()
+      formData.append("name", name)
+      formData.append("price", price)
+      formData.append("category", category)
+      formData.append("brand", brand)
+      formData.append("stock", stock)
+
+      if (file) {
+        formData.append("image", file)
+      }
+
+      await createProduct(shopId, formData)
+
+      onSuccess?.() // оновлюємо список
+      onClose()     // закриваємо модалку
+    } catch (err) {
+      console.error(err)
+      alert("Error creating product")
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
-    <div>
-      <button onClick={onClose}>Close</button>
-      {/* форма */}
+    <div  onClick={onClose}>
+      <div
+       
+        onClick={(e) => e.stopPropagation()} // щоб не закривалось при кліку всередині
+      >
+        <button  onClick={onClose}>
+          ✕
+        </button>
+
+        <h2>Add medicine</h2>
+
+        <form onSubmit={handleSubmit} >
+          <input
+            placeholder="Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+
+          <input
+            placeholder="Price"
+            type="number"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            required
+          />
+
+          <input
+            placeholder="Category"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          />
+
+          <input
+            placeholder="Brand"
+            value={brand}
+            onChange={(e) => setBrand(e.target.value)}
+          />
+
+          <input
+            placeholder="Stock"
+            type="number"
+            value={stock}
+            onChange={(e) => setStock(e.target.value)}
+          />
+
+          <input
+            type="file"
+            onChange={(e) => setFile(e.target.files?.[0] || null)}
+          />
+
+          <button type="submit" disabled={loading}>
+            {loading ? "Creating..." : "Add"}
+          </button>
+        </form>
+      </div>
     </div>
   )
 }

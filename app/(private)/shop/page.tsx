@@ -14,7 +14,7 @@ export default function ShopPage() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [tab, setTab] = useState<"shop" | "all">("shop")
 
-  const router = useRouter();
+  const router = useRouter()
 
   useEffect(() => {
     getMyShop()
@@ -50,12 +50,19 @@ export default function ShopPage() {
       <SubmitBtn onClick={() => router.push("/edit-shop")}>Edit data</SubmitBtn>
       <SubmitBtn onClick={() => setIsModalOpen(true)}>Add medicine</SubmitBtn>
 
-       {isModalOpen && (
-      <AddMedicineModal onClose={() => setIsModalOpen(false)} />
-    )}
+      {isModalOpen && (
+        <AddMedicineModal
+          shopId={shop._id}
+          onClose={() => setIsModalOpen(false)}
+          onSuccess={() => {
+            // тут потім  refetch продуктів
+            console.log("created")
+          }}
+        />
+      )}
 
       <button onClick={() => setTab("shop")}>Drug store</button>
-<button onClick={() => setTab("all")}>All medicine</button>
+      <button onClick={() => setTab("all")}>All medicine</button>
     </div>
   )
 }
