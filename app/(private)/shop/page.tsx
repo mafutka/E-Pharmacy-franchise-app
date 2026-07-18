@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { useRouter } from "next/router"
+import { useRouter } from "next/navigation"
 import { getMyShop } from "@/services/shopApi"
 import { Shop } from "@/types/shop"
 import AddMedicineModal from "@/components/AddMedicineModal/AddMedicineModal"
@@ -14,7 +14,7 @@ export default function ShopPage() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [tab, setTab] = useState<"shop" | "all">("shop")
 
-  const router = useRouter()
+  const router = useRouter();
 
   useEffect(() => {
     getMyShop()
