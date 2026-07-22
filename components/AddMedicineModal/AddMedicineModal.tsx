@@ -41,8 +41,8 @@ export default function AddMedicineModal({
 
       await createProduct(shopId, formData)
 
-      onSuccess?.() // оновлюємо список
-      onClose()     // закриваємо модалку
+      onSuccess?.() 
+      onClose()     
     } catch (err) {
       console.error(err)
       alert("Error creating product")
@@ -55,7 +55,7 @@ export default function AddMedicineModal({
     <div  onClick={onClose}>
       <div
        
-        onClick={(e) => e.stopPropagation()} // щоб не закривалось при кліку всередині
+        onClick={(e) => e.stopPropagation()} 
       >
         <button  onClick={onClose}>
           ✕
