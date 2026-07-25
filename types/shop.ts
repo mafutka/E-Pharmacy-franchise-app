@@ -6,3 +6,5 @@ export interface Shop {
   address: string
   logo?: string
 }
+
+export type ShopFormData = Omit<Shop, "_id">

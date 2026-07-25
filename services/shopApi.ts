@@ -1,4 +1,5 @@
 import { api } from "./api";
+import { Shop, ShopFormData } from "@/types/shop"
 
 export const createShop = async (formData: FormData) => {
   const res = await api.post("/shop/create", formData)
@@ -10,3 +11,9 @@ export const getMyShop = async () => {
   return res.data;
 };
 
+export const updateShop = async (
+  data: ShopFormData
+): Promise<Shop> => {
+  const res = await api.put<Shop>("/shop", data)
+  return res.data
+}
