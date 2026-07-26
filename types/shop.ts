@@ -7,4 +7,13 @@ export interface Shop {
   logo?: string
 }
 
-export type ShopFormData = Omit<Shop, "_id">
+export interface ShopFormData {
+  name: string
+  owner: string
+  email: string
+  phone: string
+  address: string
+  city: string
+  zip: string
+  hasDelivery: boolean
+}

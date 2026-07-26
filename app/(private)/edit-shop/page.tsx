@@ -9,7 +9,7 @@ import { ShopFormData } from "@/types/shop"
 export default function EditShopPage() {
   const router = useRouter()
 
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<ShopFormData>({
     name: "",
     owner: "",
     email: "",
@@ -19,11 +19,10 @@ export default function EditShopPage() {
     zip: "",
     hasDelivery: false,
   })
-
   type FormErrors = Partial<Record<keyof ShopFormData, string>>
+
   const [errors, setErrors] = useState<FormErrors>({})
   const [loading, setLoading] = useState(true)
-
 
   useEffect(() => {
     getMyShop().then((data) => {
@@ -41,28 +40,55 @@ export default function EditShopPage() {
     })
   }, [])
 
-  const handleChange = (e: any) => {
-    const { name, value } = e.target
-    setForm((prev) => ({ ...prev, [name]: value }))
-  }
+const handleChange = (
+  e: React.ChangeEvent<HTMLInputElement>
+) => {
+  const { name, value } = e.target
 
+  setForm((prev) => ({
+    ...prev,
+    [name]: value,
+  }))
+}
   const handleRadio = (value: boolean) => {
     setForm((prev) => ({ ...prev, hasDelivery: value }))
   }
+  const handleSubmit = async () => {
+  const { error } = shopSchema.validate(form, { abortEarly: false })
 
-const { error } = shopSchema.validate(form, { abortEarly: false })
+  if (error) {
+    const newErrors: FormErrors = {}
 
-if (error) {
-  const newErrors: FormErrors = {}
+    error.details.forEach((err) => {
+      const key = err.path[0] as keyof ShopFormData
+      newErrors[key] = err.message
+    })
 
-  error.details.forEach((err) => {
-    const key = err.path[0] as keyof ShopFormData
-    newErrors[key] = err.message
-  })
+    setErrors(newErrors)
+    return
+  }
 
-  setErrors(newErrors)
-  return
+  try {
+    await updateShop(form)
+    router.push("/shop")
+  } catch (e) {
+    console.error(e)
+  }
 }
+
+  const { error } = shopSchema.validate(form, { abortEarly: false })
+
+  if (error) {
+    const newErrors: FormErrors = {}
+
+    error.details.forEach((err) => {
+      const key = err.path[0] as keyof ShopFormData
+      newErrors[key] = err.message
+    })
+
+    setErrors(newErrors)
+    return
+  }
 
   if (loading) return <p>Loading...</p>
 
@@ -70,7 +96,8 @@ if (error) {
     <div>
       <h1>Edit data</h1>
       <p>
-        This information will be displayed publicly so be careful what you share.
+        This information will be displayed publicly so be careful what you
+        share.
       </p>
 
       {/* NAME */}
