@@ -6,8 +6,12 @@ import { getMyShop, updateShop } from "@/services/shopApi"
 import { shopSchema } from "../../../validation/shopSchema"
 import { ShopFormData } from "@/types/shop"
 
+type FormErrors = Partial<Record<keyof ShopFormData, string>>
+
 export default function EditShopPage() {
   const router = useRouter()
+
+  const [shopId, setShopId] = useState<string | null>(null)
 
   const [form, setForm] = useState<ShopFormData>({
     name: "",
@@ -19,75 +23,76 @@ export default function EditShopPage() {
     zip: "",
     hasDelivery: false,
   })
-  type FormErrors = Partial<Record<keyof ShopFormData, string>>
 
   const [errors, setErrors] = useState<FormErrors>({})
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    getMyShop().then((data) => {
-      setForm({
-        name: data.name || "",
-        owner: data.owner || "",
-        email: data.email || "",
-        phone: data.phone || "",
-        address: data.address || "",
-        city: data.city || "",
-        zip: data.zip || "",
-        hasDelivery: data.hasDelivery || false,
-      })
-      setLoading(false)
-    })
+    const fetchShop = async () => {
+      try {
+        const data = await getMyShop()
+
+        setShopId(data._id) 
+
+        setForm({
+          name: data.name || "",
+          owner: data.owner || "",
+          email: data.email || "",
+          phone: data.phone || "",
+          address: data.address || "",
+          city: data.city || "",
+          zip: data.zip || "",
+          hasDelivery: data.hasDelivery || false,
+        })
+      } catch (e) {
+        console.error(e)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchShop()
   }, [])
 
-const handleChange = (
-  e: React.ChangeEvent<HTMLInputElement>
-) => {
-  const { name, value } = e.target
+  // INPUT CHANGE
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
 
-  setForm((prev) => ({
-    ...prev,
-    [name]: value,
-  }))
-}
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }))
+  }
+
+  // RADIO
   const handleRadio = (value: boolean) => {
     setForm((prev) => ({ ...prev, hasDelivery: value }))
   }
+
+  // SUBMIT
   const handleSubmit = async () => {
-  const { error } = shopSchema.validate(form, { abortEarly: false })
+    const { error } = shopSchema.validate(form, { abortEarly: false })
 
-  if (error) {
-    const newErrors: FormErrors = {}
+    if (error) {
+      const newErrors: FormErrors = {}
 
-    error.details.forEach((err) => {
-      const key = err.path[0] as keyof ShopFormData
-      newErrors[key] = err.message
-    })
+      error.details.forEach((err) => {
+        const key = err.path[0] as keyof ShopFormData
+        newErrors[key] = err.message
+      })
 
-    setErrors(newErrors)
-    return
-  }
+      setErrors(newErrors)
+      return
+    }
 
-  try {
-    await updateShop(form)
-    router.push("/shop")
-  } catch (e) {
-    console.error(e)
-  }
-}
+    if (!shopId) return
 
-  const { error } = shopSchema.validate(form, { abortEarly: false })
-
-  if (error) {
-    const newErrors: FormErrors = {}
-
-    error.details.forEach((err) => {
-      const key = err.path[0] as keyof ShopFormData
-      newErrors[key] = err.message
-    })
-
-    setErrors(newErrors)
-    return
+    try {
+      await updateShop(shopId, form) // ✅ тепер є shopId
+      router.push("/shop")
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   if (loading) return <p>Loading...</p>
@@ -95,10 +100,6 @@ const handleChange = (
   return (
     <div>
       <h1>Edit data</h1>
-      <p>
-        This information will be displayed publicly so be careful what you
-        share.
-      </p>
 
       {/* NAME */}
       <input
@@ -166,6 +167,7 @@ const handleChange = (
       {/* DELIVERY */}
       <div>
         <p>Has Own Delivery System?</p>
+
         <label>
           <input
             type="radio"

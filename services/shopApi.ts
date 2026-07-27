@@ -12,8 +12,9 @@ export const getMyShop = async () => {
 };
 
 export const updateShop = async (
+  shopId: string,
   data: ShopFormData
 ): Promise<Shop> => {
-  const res = await api.put<Shop>("/shop", data)
+  const res = await api.put<Shop>(`/shop/${shopId}/update`, data)
   return res.data
 }
