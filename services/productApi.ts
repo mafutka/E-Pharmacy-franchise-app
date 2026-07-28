@@ -1,5 +1,13 @@
 import { api } from "./api";
 
+export const getAllProducts = async (params?: {
+  page?: number
+  category?: string
+  search?: string
+}) => {
+  const res = await api.get("/products", { params })
+  return res.data
+}
 export const getShopProducts = (shopId: string, page = 1) =>
   api.get(`/products/${shopId}?page=${page}`);
 

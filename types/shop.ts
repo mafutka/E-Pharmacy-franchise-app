@@ -18,3 +18,9 @@ export interface ShopFormData {
   zip: string
   hasDelivery: boolean
 }
+
+export interface Product {
+ _id: string
+  name: string
+  price: string
+}
