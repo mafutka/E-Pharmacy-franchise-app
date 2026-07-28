@@ -20,7 +20,17 @@ export interface ShopFormData {
 }
 
 export interface Product {
- _id: string
+  _id: string
   name: string
-  price: string
+  brand: string
+  price: number
+  category?: string
+  stock: number
+  image?: string
+  shopId: string
+}
+
+export interface ProductsResponse {
+  products: Product[]
+  totalPages: number
 }
