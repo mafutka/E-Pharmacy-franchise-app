@@ -2,20 +2,21 @@
 
 import { useEffect, useState } from "react"
 import { useParams } from "next/navigation"
-import { Product } from "@/types/shop"
 import { getOneProduct } from "@/services/productApi"
+import { Product } from "@/types/shop"
 
 export default function ProductPage() {
-  const { shopId, productId } = useParams()
+  const { productId } = useParams()
 
   const [product, setProduct] = useState<Product | null>(null)
 
   useEffect(() => {
-    if (!shopId || !productId) return
+    if (!productId) return
 
-    getOneProduct(shopId as string, productId as string)
-      .then(setProduct)
-  }, [shopId, productId])
+    getOneProduct(productId as string).then((data) => {
+      setProduct(data)
+    })
+  }, [productId])
 
   if (!product) return <p>Loading...</p>
 

@@ -3,7 +3,9 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { getMyShop } from "@/services/shopApi"
-import { Shop } from "@/types/shop"
+import { getShopProducts, getAllProducts } from "@/services/productApi"
+import { Shop, Product } from "@/types/shop"
+import MedicineCard from "../MedicineCard/MedicineCard"
 import AddMedicineModal from "@/components/AddMedicineModal/AddMedicineModal"
 import SubmitBtn from "@/components/SubmitBtn/SubmitBtn"
 import scss from "./Shop.module.scss"
@@ -13,6 +15,7 @@ export default function ShopInfo() {
   const [loading, setLoading] = useState(true)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [tab, setTab] = useState<"shop" | "all">("shop")
+  const [products, setProducts] = useState<Product[]>([])
 
   const router = useRouter()
 
@@ -22,6 +25,21 @@ export default function ShopInfo() {
       .catch(() => setShop(null))
       .finally(() => setLoading(false))
   }, [])
+  useEffect(() => {
+    if (!shop) return
+
+    if (tab === "shop") {
+      getShopProducts(shop._id).then((res) => {
+        setProducts(res.data.products)
+      })
+    }
+
+    if (tab === "all") {
+      getAllProducts().then((data) => {
+        setProducts(data.products)
+      })
+    }
+  }, [tab, shop])
 
   if (loading) return <p>Loading...</p>
 
@@ -63,6 +81,15 @@ export default function ShopInfo() {
 
       <button onClick={() => setTab("shop")}>Drug store</button>
       <button onClick={() => setTab("all")}>All medicine</button>
+      <div>
+      {products.map((p) => (
+  <MedicineCard
+    key={p._id}
+    product={p}
+    onDetails={() => router.push(`/medicine/${p._id}`)}
+  />
+))}
+      </div>
     </div>
   )
 }

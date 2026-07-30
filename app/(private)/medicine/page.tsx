@@ -1,12 +1,17 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
 import { getAllProducts } from "@/services/productApi"
 import { Product } from "@/types/shop"
+import MedicineCard from "@/components/MedicineCard/MedicineCard"
+import scss from "./page.module.scss"
 
 export default function MedicinePage() {
+
   const [products, setProducts] = useState<Product[]>([])
-  const [page, setPage] = useState<number>(1)
+  const [page, setPage] = useState(1)
+  const router = useRouter()
 
   useEffect(() => {
     getAllProducts({ page }).then((data) => {
@@ -18,12 +23,13 @@ export default function MedicinePage() {
     <div>
       <h1>All medicine</h1>
 
-      {products.map((p) => (
-        <div key={p._id}>
-          <h3>{p.name}</h3>
-          <p>{p.price}$</p>
-        </div>
-      ))}
+     {products.map((p) => (
+  <MedicineCard
+    key={p._id}
+    product={p}
+    onDetails={() => router.push(`/medicine/${p._id}`)}
+  />
+))}
     </div>
   )
 }

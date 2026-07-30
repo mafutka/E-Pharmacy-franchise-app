@@ -1,5 +1,5 @@
-import { api } from "./api";
-import { Product, ProductsResponse } from "@/types/shop";
+import { api } from "./api"
+import { Product, ProductsResponse } from "@/types/shop"
 
 export const getAllProducts = async (
   params?: {
@@ -12,18 +12,21 @@ export const getAllProducts = async (
   return res.data
 }
 
+// ✅ ВАЖЛИВО: БЕЗ shopId
 export const getOneProduct = async (
-  shopId: string,
   productId: string
 ): Promise<Product> => {
-  const res = await api.get(`/shop/${shopId}/products/${productId}`)
+  const res = await api.get(`/products/${productId}`)
   return res.data
 }
-export const getShopProducts = (shopId: string, page = 1) =>
-  api.get(`/products/${shopId}?page=${page}`);
+
+export const getShopProducts = async (shopId: string) => {
+  const res = await api.get(`/products/${shopId}`)
+  return res.data
+}
 
 export const createProduct = (shopId: string, formData: FormData) =>
-  api.post(`/shop/${shopId}/products`, formData);
+  api.post(`/shop/${shopId}/products`, formData)
 
 export const deleteProduct = (productId: string) =>
-  api.delete(`/products/${productId}`);
+  api.delete(`/products/${productId}`)
