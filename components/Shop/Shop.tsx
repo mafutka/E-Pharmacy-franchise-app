@@ -29,8 +29,8 @@ export default function ShopInfo() {
     if (!shop) return
 
     if (tab === "shop") {
-      getShopProducts(shop._id).then((res) => {
-        setProducts(res.data.products)
+      getShopProducts(shop._id).then((data) => {
+        setProducts(data.products)
       })
     }
 
@@ -47,7 +47,7 @@ export default function ShopInfo() {
 
   return (
     <div className={scss.info}>
-      <h3>{shop.name}</h3>
+      <h3>{shop.name}</h3>`
       <p>
         Owner: <span>{shop.owner}</span>
       </p>
@@ -67,7 +67,6 @@ export default function ShopInfo() {
       </div>
       <SubmitBtn onClick={() => router.push("/edit-shop")}>Edit data</SubmitBtn>
       <SubmitBtn onClick={() => setIsModalOpen(true)}>Add medicine</SubmitBtn>
-
       {isModalOpen && (
         <AddMedicineModal
           shopId={shop._id}
@@ -78,17 +77,16 @@ export default function ShopInfo() {
           }}
         />
       )}
-
       <button onClick={() => setTab("shop")}>Drug store</button>
       <button onClick={() => setTab("all")}>All medicine</button>
       <div>
-      {products.map((p) => (
-  <MedicineCard
-    key={p._id}
-    product={p}
-    onDetails={() => router.push(`/medicine/${p._id}`)}
-  />
-))}
+        {products.map((p) => (
+          <MedicineCard
+            key={p._id}
+            product={p}
+            onDetails={() => router.push(`/medicine/${p._id}`)}
+          />
+        ))}
       </div>
     </div>
   )

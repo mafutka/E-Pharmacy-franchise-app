@@ -12,7 +12,6 @@ export const getAllProducts = async (
   return res.data
 }
 
-// ✅ ВАЖЛИВО: БЕЗ shopId
 export const getOneProduct = async (
   productId: string
 ): Promise<Product> => {
@@ -21,7 +20,7 @@ export const getOneProduct = async (
 }
 
 export const getShopProducts = async (shopId: string) => {
-  const res = await api.get(`/products/${shopId}`)
+  const res = await api.get(`/shop/${shopId}/products`)
   return res.data
 }
 
