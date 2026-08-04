@@ -24,7 +24,7 @@ export default function ProductDetailsPage() {
 
       {product.image && (
         <img
-          src={`${process.env.API_URL}${product.image}`}
+          src={`${process.env.NEXT_PUBLIC_API_URL}${product.image}`}
           alt={product.name}
           width={200}
         />
