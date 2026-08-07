@@ -10,7 +10,7 @@ export default function MedicineCard({ product, onDetails }: Props) {
     <div>
          {product.image && (
         <img
-          src={`${process.env.NEXT_PUBLIC_SERVER_URL}${product.image}`}
+          src={`${process.env.NEXT_PUBLIC_SERVER_URL4}${product.image}`}
           alt={product.name}
           width={100}
         />

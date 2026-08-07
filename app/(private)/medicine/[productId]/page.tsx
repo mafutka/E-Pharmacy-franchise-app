@@ -20,7 +20,7 @@ export default function ProductDetailsPage() {
 
   return (
     <div>
-      <h1>{product.name}</h1>
+      <h4>{product.name}</h4>
 
       {product.image && (
         <img
