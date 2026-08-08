@@ -17,18 +17,10 @@ export const loginUser = async (data: {
   const res = await api.post("/user/login", data);
   return res.data;
 };
-
 export const getCurrentUser = async () => {
-  const token = localStorage.getItem("token");
-
-  const res = await api.get("/user/current", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  return res.data;
-};
+  const res = await api.get("/user/user-info")
+  return res.data
+}
 
 export const logoutUser = async () => {
   await api.post("/user/logout");
