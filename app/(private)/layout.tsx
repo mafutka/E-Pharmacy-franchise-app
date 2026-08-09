@@ -2,11 +2,8 @@
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import Header from "@/components/Header/Header"
-import Footer from "@/components/Footer/Footer"
 import { useAuthStore } from "@/store/authStore"
 import { getMyShop } from "@/services/shopApi"
-import scss from "./layout.module.scss"
 
 export default function Layout({
   children,
@@ -14,12 +11,18 @@ export default function Layout({
   children: React.ReactNode
 }) {
   const router = useRouter()
-  const token = useAuthStore((s) => s.token)
 
+  const { token, isInitialized, initAuth } = useAuthStore()
 
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    initAuth()
+  }, [initAuth])
+  
+  useEffect(() => {
+    if (!isInitialized) return
+
     if (!token) {
       router.push("/login")
       return
@@ -40,15 +43,11 @@ export default function Layout({
     }
 
     checkShop()
-  }, [token, router])
+  }, [token, isInitialized, router])
 
-  if (loading) return <p>Loading...</p>
+  if (!isInitialized || loading) {
+    return <>Loading...</>
+  }
 
-  return (
-    <>
-      <Header isAuth={!!token} />
-      <main className={scss.content}>{children}</main>
-      <Footer />
-    </>
-  )
+  return <>{children}</>
 }
