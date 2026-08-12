@@ -7,7 +7,7 @@ export const getAllProducts = async (
     category?: string
     search?: string
   }
-): Promise<ProductsResponse> => {
+) => {
   const res = await api.get("/products", { params })
   return res.data
 }
@@ -19,8 +19,18 @@ export const getOneProduct = async (
   return res.data
 }
 
-export const getShopProducts = async (shopId: string) => {
-  const res = await api.get(`/shop/${shopId}/products`)
+export const getShopProducts = async (
+  shopId: string,
+  params?: {
+    page?: number
+    category?: string
+    search?: string
+  }
+) => {
+  const res = await api.get(`/shop/${shopId}/products`, {
+    params,
+  })
+
   return res.data
 }
 

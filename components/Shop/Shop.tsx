@@ -12,6 +12,8 @@ import scss from "./Shop.module.scss"
 
 export default function ShopInfo() {
   const [shop, setShop] = useState<Shop | null>(null)
+  const [category, setCategory] = useState("")
+  const [search, setSearch] = useState("")
   const [loading, setLoading] = useState(true)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [tab, setTab] = useState<"shop" | "all">("shop")
@@ -25,21 +27,35 @@ export default function ShopInfo() {
       .catch(() => setShop(null))
       .finally(() => setLoading(false))
   }, [])
-  useEffect(() => {
-    if (!shop) return
+useEffect(() => {
+  if (!shop) return
 
-    if (tab === "shop") {
-      getShopProducts(shop._id).then((data) => {
-        setProducts(data.products)
-      })
-    }
+  const loadProducts = async () => {
+    try {
+      if (tab === "shop") {
+        const data = await getShopProducts(shop._id, {
+          category,
+          search,
+        })
 
-    if (tab === "all") {
-      getAllProducts().then((data) => {
         setProducts(data.products)
-      })
+      }
+
+      if (tab === "all") {
+        const data = await getAllProducts({
+          category,
+          search,
+        })
+
+        setProducts(data.products)
+      }
+    } catch (error) {
+      console.error(error)
     }
-  }, [tab, shop])
+  }
+
+  loadProducts()
+}, [tab, shop, category, search])
 
   if (loading) return <p>Loading...</p>
 
@@ -79,6 +95,23 @@ export default function ShopInfo() {
       )}
       <button onClick={() => setTab("shop")}>Drug store</button>
       <button onClick={() => setTab("all")}>All medicine</button>
+      <div className={scss.filters}>
+        <select value={category} onChange={(e) => setCategory(e.target.value)}>
+          <option value="">Product category</option>
+          <option value="Painkillers">Painkillers</option>
+          <option value="Antibiotics">Antibiotics</option>
+          <option value="Vitamins">Vitamins</option>
+        </select>
+
+        <input
+          type="text"
+          placeholder="Search medicine"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+
+        <button type="button">Filter</button>
+      </div>
       <div>
         {products.map((p) => (
           <MedicineCard
