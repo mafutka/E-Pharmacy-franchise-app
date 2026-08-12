@@ -24,6 +24,7 @@ export interface Product {
   name: string
   brand: string
   price: number
+  description?: string
   category?: string
   stock: number
   image?: string

@@ -10,7 +10,7 @@ type Props = {
   onSuccess?: () => void
 }
 
-export default function AddMedicineModal({
+export default function EditMedicineModal({
   onClose,
   shopId,
   onSuccess,

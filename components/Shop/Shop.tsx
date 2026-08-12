@@ -6,7 +6,9 @@ import { getMyShop } from "@/services/shopApi"
 import { getShopProducts, getAllProducts } from "@/services/productApi"
 import { Shop, Product } from "@/types/shop"
 import MedicineCard from "../MedicineCard/MedicineCard"
-import AddMedicineModal from "@/components/AddMedicineModal/AddMedicineModal"
+import AddMedicineModal from "@/components/MedicineModal/AddMedicineModal"
+import EditMedicineModal from "../MedicineModal/EditMedicineModal"
+import ConfirmDeleteModal from "../MedicineModal/ConfirmDeleteModal"
 import SubmitBtn from "@/components/SubmitBtn/SubmitBtn"
 import scss from "./Shop.module.scss"
 
@@ -18,8 +20,24 @@ export default function ShopInfo() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [tab, setTab] = useState<"shop" | "all">("shop")
   const [products, setProducts] = useState<Product[]>([])
+  const [editingProduct, setEditingProduct] = useState<Product | null>(null)
+  const [deletingProduct, setDeletingProduct] = useState<Product | null>(null)
 
   const router = useRouter()
+
+  const handleDelete = async () => {
+    if (!deletingProduct) return
+
+    try {
+      await deleteProduct(deletingProduct._id)
+
+      setProducts((prev) => prev.filter((p) => p._id !== deletingProduct._id))
+
+      setDeletingProduct(null)
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   useEffect(() => {
     getMyShop()
@@ -27,35 +45,35 @@ export default function ShopInfo() {
       .catch(() => setShop(null))
       .finally(() => setLoading(false))
   }, [])
-useEffect(() => {
-  if (!shop) return
+  useEffect(() => {
+    if (!shop) return
 
-  const loadProducts = async () => {
-    try {
-      if (tab === "shop") {
-        const data = await getShopProducts(shop._id, {
-          category,
-          search,
-        })
+    const loadProducts = async () => {
+      try {
+        if (tab === "shop") {
+          const data = await getShopProducts(shop._id, {
+            category,
+            search,
+          })
 
-        setProducts(data.products)
+          setProducts(data.products)
+        }
+
+        if (tab === "all") {
+          const data = await getAllProducts({
+            category,
+            search,
+          })
+
+          setProducts(data.products)
+        }
+      } catch (error) {
+        console.error(error)
       }
-
-      if (tab === "all") {
-        const data = await getAllProducts({
-          category,
-          search,
-        })
-
-        setProducts(data.products)
-      }
-    } catch (error) {
-      console.error(error)
     }
-  }
 
-  loadProducts()
-}, [tab, shop, category, search])
+    loadProducts()
+  }, [tab, shop, category, search])
 
   if (loading) return <p>Loading...</p>
 
@@ -117,9 +135,29 @@ useEffect(() => {
           <MedicineCard
             key={p._id}
             product={p}
+            tab={tab}
             onDetails={() => router.push(`/medicine/${p._id}`)}
+            onEdit={() => setEditingProduct(p)}
+            onDelete={() => setDeletingProduct(p)}
           />
         ))}
+        {editingProduct && (
+          <EditMedicineModal
+            product={editingProduct}
+            onClose={() => setEditingProduct(null)}
+            onSuccess={() => {
+              setEditingProduct(null)
+              // тут повторно завантажуємо товари
+            }}
+          />
+        )}
+        {deletingProduct && (
+          <ConfirmDeleteModal
+            product={deletingProduct}
+            onClose={() => setDeletingProduct(null)}
+            onConfirm={handleDelete}
+          />
+        )}
       </div>
     </div>
   )
