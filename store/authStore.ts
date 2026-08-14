@@ -1,48 +1,75 @@
 import { create } from "zustand"
-import { persist } from "zustand/middleware"
-import { getCurrentUser, logoutUser } from "@/services/authApi"
+import {
+  getCurrentUser,
+  logoutUser,
+} from "@/services/authApi"
 import type { AuthState } from "@/types/auth"
 
-export const useAuthStore = create<AuthState>()(
-  persist(
-    (set) => ({
-      token: null,
-      isInitialized: false,
+export const useAuthStore = create<AuthState>(
+  (set) => ({
+    token: null,
 
-      setToken: (token: string | null) => {
-        set({ token })
-      },
+    isInitialized: false,
 
-      logout: async () => {
-        try {
-          await logoutUser()
-        } catch (e) {
-          console.error(e)
-        }
+    setToken: (token) => {
+      if (token) {
+        localStorage.setItem(
+          "token",
+          token
+        )
+      } else {
+        localStorage.removeItem(
+          "token"
+        )
+      }
 
-        set({ token: null })
-      },
+      set({ token })
+    },
 
-      initAuth: async () => {
-        const token = localStorage.getItem("token")
+    logout: async () => {
+      try {
+        await logoutUser()
+      } catch (error) {
+        console.error(error)
+      }
 
-        if (!token) {
-          set({ token: null, isInitialized: true })
-          return
-        }
+      localStorage.removeItem("token")
 
-        set({ token })
+      set({
+        token: null,
+        isInitialized: true,
+      })
+    },
 
-        try {
-          await getCurrentUser()
-          set({ isInitialized: true })
-        } catch {
-          set({ token: null, isInitialized: true })
-        }
-      },
-    }),
-    {
-      name: "auth-storage",
-    }
-  )
+    initAuth: async () => {
+      const token =
+        localStorage.getItem("token")
+
+      if (!token) {
+        set({
+          token: null,
+          isInitialized: true,
+        })
+
+        return
+      }
+
+      set({ token })
+
+      try {
+        await getCurrentUser()
+
+        set({
+          isInitialized: true,
+        })
+      } catch {
+        localStorage.removeItem("token")
+
+        set({
+          token: null,
+          isInitialized: true,
+        })
+      }
+    },
+  })
 )

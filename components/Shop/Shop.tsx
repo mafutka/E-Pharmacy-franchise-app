@@ -1,43 +1,79 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
+
 import { getMyShop } from "@/services/shopApi"
-import { getShopProducts, getAllProducts } from "@/services/productApi"
+
+import {
+  getShopProducts,
+  getAllProducts,
+  deleteProduct,
+} from "@/services/productApi"
+
 import { Shop, Product } from "@/types/shop"
+
 import MedicineCard from "../MedicineCard/MedicineCard"
 import AddMedicineModal from "@/components/MedicineModal/AddMedicineModal"
 import EditMedicineModal from "../MedicineModal/EditMedicineModal"
 import ConfirmDeleteModal from "../MedicineModal/ConfirmDeleteModal"
 import SubmitBtn from "@/components/SubmitBtn/SubmitBtn"
+
 import scss from "./Shop.module.scss"
 
 export default function ShopInfo() {
-  const [shop, setShop] = useState<Shop | null>(null)
-  const [category, setCategory] = useState("")
-  const [search, setSearch] = useState("")
-  const [loading, setLoading] = useState(true)
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [tab, setTab] = useState<"shop" | "all">("shop")
-  const [products, setProducts] = useState<Product[]>([])
-  const [editingProduct, setEditingProduct] = useState<Product | null>(null)
-  const [deletingProduct, setDeletingProduct] = useState<Product | null>(null)
-
   const router = useRouter()
 
-  const handleDelete = async () => {
-    if (!deletingProduct) return
+  const [shop, setShop] =
+    useState<Shop | null>(null)
 
-    try {
-      await deleteProduct(deletingProduct._id)
+  const [products, setProducts] =
+    useState<Product[]>([])
 
-      setProducts((prev) => prev.filter((p) => p._id !== deletingProduct._id))
+  const [loading, setLoading] =
+    useState(true)
 
-      setDeletingProduct(null)
-    } catch (error) {
-      console.error(error)
-    }
-  }
+  const [productsLoading, setProductsLoading] =
+    useState(false)
+
+  const [isModalOpen, setIsModalOpen] =
+    useState(false)
+
+  const [editingProduct, setEditingProduct] =
+    useState<Product | null>(null)
+
+  const [deletingProduct, setDeletingProduct] =
+    useState<Product | null>(null)
+
+  const [deleteLoading, setDeleteLoading] =
+    useState(false)
+
+  const [tab, setTab] =
+    useState<"shop" | "all">("shop")
+
+  // Те, що зараз вибрано/введено
+  const [category, setCategory] =
+    useState("")
+
+  const [search, setSearch] =
+    useState("")
+
+  // Те, що реально застосовано
+  const [appliedCategory, setAppliedCategory] =
+    useState("")
+
+  const [appliedSearch, setAppliedSearch] =
+    useState("")
+
+  const [page, setPage] =
+    useState(1)
+
+  const [totalPages, setTotalPages] =
+    useState(1)
+
+  // =========================
+  // GET SHOP
+  // =========================
 
   useEffect(() => {
     getMyShop()
@@ -45,120 +81,387 @@ export default function ShopInfo() {
       .catch(() => setShop(null))
       .finally(() => setLoading(false))
   }, [])
-  useEffect(() => {
-    if (!shop) return
 
-    const loadProducts = async () => {
+  // =========================
+  // LOAD PRODUCTS
+  // =========================
+
+  const loadProducts = useCallback(
+    async () => {
+      if (!shop) return
+
       try {
+        setProductsLoading(true)
+
         if (tab === "shop") {
-          const data = await getShopProducts(shop._id, {
-            category,
-            search,
-          })
+          const data =
+            await getShopProducts(
+              shop._id,
+              {
+                page,
+              }
+            )
 
           setProducts(data.products)
-        }
-
-        if (tab === "all") {
-          const data = await getAllProducts({
-            category,
-            search,
-          })
+          setTotalPages(data.totalPages)
+        } else {
+          const data =
+            await getAllProducts({
+              page,
+              category:
+                appliedCategory || undefined,
+              search:
+                appliedSearch || undefined,
+            })
 
           setProducts(data.products)
+          setTotalPages(data.totalPages)
         }
       } catch (error) {
-        console.error(error)
+        console.error(
+          "Error loading products:",
+          error
+        )
+      } finally {
+        setProductsLoading(false)
       }
+    },
+    [
+      shop,
+      tab,
+      page,
+      appliedCategory,
+      appliedSearch,
+    ]
+  )
+
+  useEffect(() => {
+    loadProducts()
+  }, [loadProducts])
+
+  // =========================
+  // CHANGE TAB
+  // =========================
+
+  const handleTabChange = (
+    newTab: "shop" | "all"
+  ) => {
+    setTab(newTab)
+    setPage(1)
+
+    if (newTab === "shop") {
+      setCategory("")
+      setSearch("")
+      setAppliedCategory("")
+      setAppliedSearch("")
+    }
+  }
+
+  // =========================
+  // FILTER
+  // =========================
+
+  const handleFilter = () => {
+    setAppliedCategory(category)
+    setAppliedSearch(search)
+    setPage(1)
+  }
+
+  // =========================
+  // DELETE
+  // =========================
+
+  const handleDelete = async () => {
+    if (
+      !deletingProduct ||
+      !shop
+    ) {
+      return
     }
 
-    loadProducts()
-  }, [tab, shop, category, search])
+    try {
+      setDeleteLoading(true)
 
-  if (loading) return <p>Loading...</p>
+      await deleteProduct(
+        shop._id,
+        deletingProduct._id
+      )
 
-  if (!shop) return <p>No shop found</p>
+      setDeletingProduct(null)
+
+      await loadProducts()
+    } catch (error) {
+      console.error(error)
+      alert("Error deleting product")
+    } finally {
+      setDeleteLoading(false)
+    }
+  }
+
+  // =========================
+  // LOADING
+  // =========================
+
+  if (loading) {
+    return <p>Loading...</p>
+  }
+
+  if (!shop) {
+    return <p>No shop found</p>
+  }
+
+  // =========================
+  // RENDER
+  // =========================
 
   return (
     <div className={scss.info}>
-      <h3>{shop.name}</h3>`
+
+      <h3>{shop.name}</h3>
+
       <p>
-        Owner: <span>{shop.owner}</span>
+        Owner:{" "}
+        <span>{shop.owner}</span>
       </p>
+
       <div className={scss.contacts}>
         <div>
           <svg className={scss.icon}>
             <use href="/sprite.svg#icon-map-pin" />
           </svg>
+
           <span>{shop.address}</span>
         </div>
+
         <div>
           <svg className={scss.icon}>
             <use href="/sprite.svg#icon-phone" />
-          </svg>{" "}
+          </svg>
+
           <span>{shop.phone}</span>
         </div>
       </div>
-      <SubmitBtn onClick={() => router.push("/edit-shop")}>Edit data</SubmitBtn>
-      <SubmitBtn onClick={() => setIsModalOpen(true)}>Add medicine</SubmitBtn>
+
+      <SubmitBtn
+        onClick={() =>
+          router.push("/edit-shop")
+        }
+      >
+        Edit data
+      </SubmitBtn>
+
+      <SubmitBtn
+        onClick={() =>
+          setIsModalOpen(true)
+        }
+      >
+        Add medicine
+      </SubmitBtn>
+
+      {/* ADD */}
+
       {isModalOpen && (
         <AddMedicineModal
           shopId={shop._id}
-          onClose={() => setIsModalOpen(false)}
-          onSuccess={() => {
-            // тут потім  refetch продуктів
-            console.log("created")
+          onClose={() =>
+            setIsModalOpen(false)
+          }
+          onSuccess={loadProducts}
+        />
+      )}
+
+      {/* TABS */}
+
+      <div className={scss.tabs}>
+
+        <button
+          type="button"
+          onClick={() =>
+            handleTabChange("shop")
+          }
+          className={
+            tab === "shop"
+              ? scss.activeTab
+              : ""
+          }
+        >
+          Drug store
+        </button>
+
+        <button
+          type="button"
+          onClick={() =>
+            handleTabChange("all")
+          }
+          className={
+            tab === "all"
+              ? scss.activeTab
+              : ""
+          }
+        >
+          All medicine
+        </button>
+
+      </div>
+
+      {/* FILTERS ONLY FOR ALL MEDICINE */}
+
+      {tab === "all" && (
+        <div className={scss.filters}>
+
+          <select
+            value={category}
+            onChange={(e) =>
+              setCategory(e.target.value)
+            }
+          >
+            <option value="">
+              Product category
+            </option>
+
+            <option value="painkiller">
+              Painkiller
+            </option>
+
+            <option value="antibiotic">
+              Antibiotic
+            </option>
+
+            <option value="vitamins">
+              Vitamins
+            </option>
+          </select>
+
+          <input
+            type="text"
+            placeholder="Search medicine"
+            value={search}
+            onChange={(e) =>
+              setSearch(e.target.value)
+            }
+          />
+
+          <button
+            type="button"
+            onClick={handleFilter}
+          >
+            Filter
+          </button>
+
+        </div>
+      )}
+
+      {/* PRODUCTS */}
+
+      {productsLoading ? (
+        <p>Loading products...</p>
+      ) : (
+        <div>
+          {products.length === 0 ? (
+            <p>No products found</p>
+          ) : (
+            products.map((product) => (
+              <MedicineCard
+                key={product._id}
+                product={product}
+                tab={tab}
+                onDetails={() =>
+                  router.push(
+                    `/medicine/${product._id}`
+                  )
+                }
+                onEdit={
+                  tab === "shop"
+                    ? () =>
+                        setEditingProduct(
+                          product
+                        )
+                    : undefined
+                }
+                onDelete={
+                  tab === "shop"
+                    ? () =>
+                        setDeletingProduct(
+                          product
+                        )
+                    : undefined
+                }
+              />
+            ))
+          )}
+        </div>
+      )}
+
+      {/* PAGINATION */}
+
+      {totalPages > 1 && (
+        <div className={scss.pagination}>
+
+          <button
+            type="button"
+            disabled={page === 1}
+            onClick={() =>
+              setPage((prev) =>
+                Math.max(1, prev - 1)
+              )
+            }
+          >
+            Previous
+          </button>
+
+          <span>
+            {page} / {totalPages}
+          </span>
+
+          <button
+            type="button"
+            disabled={
+              page === totalPages
+            }
+            onClick={() =>
+              setPage((prev) =>
+                Math.min(
+                  totalPages,
+                  prev + 1
+                )
+              )
+            }
+          >
+            Next
+          </button>
+
+        </div>
+      )}
+
+      {/* EDIT */}
+
+      {editingProduct && (
+        <EditMedicineModal
+          product={editingProduct}
+          shopId={shop._id}
+          onClose={() =>
+            setEditingProduct(null)
+          }
+          onSuccess={async () => {
+            setEditingProduct(null)
+            await loadProducts()
           }}
         />
       )}
-      <button onClick={() => setTab("shop")}>Drug store</button>
-      <button onClick={() => setTab("all")}>All medicine</button>
-      <div className={scss.filters}>
-        <select value={category} onChange={(e) => setCategory(e.target.value)}>
-          <option value="">Product category</option>
-          <option value="Painkillers">Painkillers</option>
-          <option value="Antibiotics">Antibiotics</option>
-          <option value="Vitamins">Vitamins</option>
-        </select>
 
-        <input
-          type="text"
-          placeholder="Search medicine"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
+      {/* DELETE */}
+
+      {deletingProduct && (
+        <ConfirmDeleteModal
+          product={deletingProduct}
+          onClose={() =>
+            setDeletingProduct(null)
+          }
+          onConfirm={handleDelete}
+          loading={deleteLoading}
         />
+      )}
 
-        <button type="button">Filter</button>
-      </div>
-      <div>
-        {products.map((p) => (
-          <MedicineCard
-            key={p._id}
-            product={p}
-            tab={tab}
-            onDetails={() => router.push(`/medicine/${p._id}`)}
-            onEdit={() => setEditingProduct(p)}
-            onDelete={() => setDeletingProduct(p)}
-          />
-        ))}
-        {editingProduct && (
-          <EditMedicineModal
-            product={editingProduct}
-            onClose={() => setEditingProduct(null)}
-            onSuccess={() => {
-              setEditingProduct(null)
-              // тут повторно завантажуємо товари
-            }}
-          />
-        )}
-        {deletingProduct && (
-          <ConfirmDeleteModal
-            product={deletingProduct}
-            onClose={() => setDeletingProduct(null)}
-            onConfirm={handleDelete}
-          />
-        )}
-      </div>
     </div>
   )
 }

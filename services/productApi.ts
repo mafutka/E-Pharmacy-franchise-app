@@ -7,7 +7,7 @@ export const getAllProducts = async (
     category?: string
     search?: string
   }
-) => {
+): Promise<ProductsResponse> => {
   const res = await api.get("/products", { params })
   return res.data
 }
@@ -26,7 +26,7 @@ export const getShopProducts = async (
     category?: string
     search?: string
   }
-) => {
+): Promise<ProductsResponse> => {
   const res = await api.get(`/shop/${shopId}/products`, {
     params,
   })
@@ -34,8 +34,29 @@ export const getShopProducts = async (
   return res.data
 }
 
-export const createProduct = (shopId: string, formData: FormData) =>
-  api.post(`/shop/${shopId}/products`, formData)
+export const createProduct = (
+  shopId: string,
+  formData: FormData
+) => {
+  return api.post(`/shop/${shopId}/products`, formData)
+}
 
-export const deleteProduct = (productId: string) =>
-  api.delete(`/products/${productId}`)
+export const updateProduct = (
+  shopId: string,
+  productId: string,
+  formData: FormData
+) => {
+  return api.put(
+    `/shop/${shopId}/products/${productId}/edit`,
+    formData
+  )
+}
+
+export const deleteProduct = (
+  shopId: string,
+  productId: string
+) => {
+  return api.delete(
+    `/shop/${shopId}/products/${productId}/delete`
+  )
+}
