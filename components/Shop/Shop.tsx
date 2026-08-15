@@ -17,6 +17,7 @@ import MedicineCard from "../MedicineCard/MedicineCard"
 import AddMedicineModal from "@/components/MedicineModal/AddMedicineModal"
 import EditMedicineModal from "../MedicineModal/EditMedicineModal"
 import ConfirmDeleteModal from "../MedicineModal/ConfirmDeleteModal"
+import AddToShopModal from "../MedicineModal/AddToShopModal"
 import SubmitBtn from "@/components/SubmitBtn/SubmitBtn"
 
 import scss from "./Shop.module.scss"
@@ -24,52 +25,39 @@ import scss from "./Shop.module.scss"
 export default function ShopInfo() {
   const router = useRouter()
 
-  const [shop, setShop] =
-    useState<Shop | null>(null)
+  const [shop, setShop] = useState<Shop | null>(null)
 
-  const [products, setProducts] =
-    useState<Product[]>([])
+  const [products, setProducts] = useState<Product[]>([])
 
-  const [loading, setLoading] =
-    useState(true)
+  const [loading, setLoading] = useState(true)
 
-  const [productsLoading, setProductsLoading] =
-    useState(false)
+  const [productsLoading, setProductsLoading] = useState(false)
 
-  const [isModalOpen, setIsModalOpen] =
-    useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const [editingProduct, setEditingProduct] =
-    useState<Product | null>(null)
+  const [editingProduct, setEditingProduct] = useState<Product | null>(null)
 
-  const [deletingProduct, setDeletingProduct] =
-    useState<Product | null>(null)
+  const [deletingProduct, setDeletingProduct] = useState<Product | null>(null)
 
-  const [deleteLoading, setDeleteLoading] =
-    useState(false)
+  const [deleteLoading, setDeleteLoading] = useState(false)
 
-  const [tab, setTab] =
-    useState<"shop" | "all">("shop")
+  const [tab, setTab] = useState<"shop" | "all">("shop")
 
   // Те, що зараз вибрано/введено
-  const [category, setCategory] =
-    useState("")
+  const [category, setCategory] = useState("")
 
-  const [search, setSearch] =
-    useState("")
+  const [search, setSearch] = useState("")
 
   // Те, що реально застосовано
-  const [appliedCategory, setAppliedCategory] =
-    useState("")
+  const [appliedCategory, setAppliedCategory] = useState("")
 
-  const [appliedSearch, setAppliedSearch] =
-    useState("")
+  const [appliedSearch, setAppliedSearch] = useState("")
 
-  const [page, setPage] =
-    useState(1)
+  const [page, setPage] = useState(1)
 
-  const [totalPages, setTotalPages] =
-    useState(1)
+  const [totalPages, setTotalPages] = useState(1)
+
+  const [addingProduct, setAddingProduct] = useState<Product | null>(null)
 
   // =========================
   // GET SHOP
@@ -86,54 +74,35 @@ export default function ShopInfo() {
   // LOAD PRODUCTS
   // =========================
 
-  const loadProducts = useCallback(
-    async () => {
-      if (!shop) return
+  const loadProducts = useCallback(async () => {
+    if (!shop) return
 
-      try {
-        setProductsLoading(true)
+    try {
+      setProductsLoading(true)
 
-        if (tab === "shop") {
-          const data =
-            await getShopProducts(
-              shop._id,
-              {
-                page,
-              }
-            )
+      if (tab === "shop") {
+        const data = await getShopProducts(shop._id, {
+          page,
+        })
 
-          setProducts(data.products)
-          setTotalPages(data.totalPages)
-        } else {
-          const data =
-            await getAllProducts({
-              page,
-              category:
-                appliedCategory || undefined,
-              search:
-                appliedSearch || undefined,
-            })
+        setProducts(data.products)
+        setTotalPages(data.totalPages)
+      } else {
+        const data = await getAllProducts({
+          page,
+          category: appliedCategory || undefined,
+          search: appliedSearch || undefined,
+        })
 
-          setProducts(data.products)
-          setTotalPages(data.totalPages)
-        }
-      } catch (error) {
-        console.error(
-          "Error loading products:",
-          error
-        )
-      } finally {
-        setProductsLoading(false)
+        setProducts(data.products)
+        setTotalPages(data.totalPages)
       }
-    },
-    [
-      shop,
-      tab,
-      page,
-      appliedCategory,
-      appliedSearch,
-    ]
-  )
+    } catch (error) {
+      console.error("Error loading products:", error)
+    } finally {
+      setProductsLoading(false)
+    }
+  }, [shop, tab, page, appliedCategory, appliedSearch])
 
   useEffect(() => {
     loadProducts()
@@ -143,9 +112,7 @@ export default function ShopInfo() {
   // CHANGE TAB
   // =========================
 
-  const handleTabChange = (
-    newTab: "shop" | "all"
-  ) => {
+  const handleTabChange = (newTab: "shop" | "all") => {
     setTab(newTab)
     setPage(1)
 
@@ -172,20 +139,14 @@ export default function ShopInfo() {
   // =========================
 
   const handleDelete = async () => {
-    if (
-      !deletingProduct ||
-      !shop
-    ) {
+    if (!deletingProduct || !shop) {
       return
     }
 
     try {
       setDeleteLoading(true)
 
-      await deleteProduct(
-        shop._id,
-        deletingProduct._id
-      )
+      await deleteProduct(shop._id, deletingProduct._id)
 
       setDeletingProduct(null)
 
@@ -216,12 +177,10 @@ export default function ShopInfo() {
 
   return (
     <div className={scss.info}>
-
       <h3>{shop.name}</h3>
 
       <p>
-        Owner:{" "}
-        <span>{shop.owner}</span>
+        Owner: <span>{shop.owner}</span>
       </p>
 
       <div className={scss.contacts}>
@@ -242,30 +201,16 @@ export default function ShopInfo() {
         </div>
       </div>
 
-      <SubmitBtn
-        onClick={() =>
-          router.push("/edit-shop")
-        }
-      >
-        Edit data
-      </SubmitBtn>
+      <SubmitBtn onClick={() => router.push("/edit-shop")}>Edit data</SubmitBtn>
 
-      <SubmitBtn
-        onClick={() =>
-          setIsModalOpen(true)
-        }
-      >
-        Add medicine
-      </SubmitBtn>
+      <SubmitBtn onClick={() => setIsModalOpen(true)}>Add medicine</SubmitBtn>
 
       {/* ADD */}
 
       {isModalOpen && (
         <AddMedicineModal
           shopId={shop._id}
-          onClose={() =>
-            setIsModalOpen(false)
-          }
+          onClose={() => setIsModalOpen(false)}
           onSuccess={loadProducts}
         />
       )}
@@ -273,81 +218,50 @@ export default function ShopInfo() {
       {/* TABS */}
 
       <div className={scss.tabs}>
-
         <button
           type="button"
-          onClick={() =>
-            handleTabChange("shop")
-          }
-          className={
-            tab === "shop"
-              ? scss.activeTab
-              : ""
-          }
+          onClick={() => handleTabChange("shop")}
+          className={tab === "shop" ? scss.activeTab : ""}
         >
           Drug store
         </button>
 
         <button
           type="button"
-          onClick={() =>
-            handleTabChange("all")
-          }
-          className={
-            tab === "all"
-              ? scss.activeTab
-              : ""
-          }
+          onClick={() => handleTabChange("all")}
+          className={tab === "all" ? scss.activeTab : ""}
         >
           All medicine
         </button>
-
       </div>
 
       {/* FILTERS ONLY FOR ALL MEDICINE */}
 
       {tab === "all" && (
         <div className={scss.filters}>
-
           <select
             value={category}
-            onChange={(e) =>
-              setCategory(e.target.value)
-            }
+            onChange={(e) => setCategory(e.target.value)}
           >
-            <option value="">
-              Product category
-            </option>
+            <option value="">Product category</option>
 
-            <option value="painkiller">
-              Painkiller
-            </option>
+            <option value="painkiller">Painkiller</option>
 
-            <option value="antibiotic">
-              Antibiotic
-            </option>
+            <option value="antibiotic">Antibiotic</option>
 
-            <option value="vitamins">
-              Vitamins
-            </option>
+            <option value="vitamins">Vitamins</option>
           </select>
 
           <input
             type="text"
             placeholder="Search medicine"
             value={search}
-            onChange={(e) =>
-              setSearch(e.target.value)
-            }
+            onChange={(e) => setSearch(e.target.value)}
           />
 
-          <button
-            type="button"
-            onClick={handleFilter}
-          >
+          <button type="button" onClick={handleFilter}>
             Filter
           </button>
-
         </div>
       )}
 
@@ -365,26 +279,15 @@ export default function ShopInfo() {
                 key={product._id}
                 product={product}
                 tab={tab}
-                onDetails={() =>
-                  router.push(
-                    `/medicine/${product._id}`
-                  )
-                }
+                onDetails={() => router.push(`/medicine/${product._id}`)}
                 onEdit={
-                  tab === "shop"
-                    ? () =>
-                        setEditingProduct(
-                          product
-                        )
-                    : undefined
+                  tab === "shop" ? () => setEditingProduct(product) : undefined
                 }
                 onDelete={
-                  tab === "shop"
-                    ? () =>
-                        setDeletingProduct(
-                          product
-                        )
-                    : undefined
+                  tab === "shop" ? () => setDeletingProduct(product) : undefined
+                }
+                onAddToShop={
+                  tab === "all" ? () => setAddingProduct(product) : undefined
                 }
               />
             ))
@@ -396,15 +299,10 @@ export default function ShopInfo() {
 
       {totalPages > 1 && (
         <div className={scss.pagination}>
-
           <button
             type="button"
             disabled={page === 1}
-            onClick={() =>
-              setPage((prev) =>
-                Math.max(1, prev - 1)
-              )
-            }
+            onClick={() => setPage((prev) => Math.max(1, prev - 1))}
           >
             Previous
           </button>
@@ -415,21 +313,11 @@ export default function ShopInfo() {
 
           <button
             type="button"
-            disabled={
-              page === totalPages
-            }
-            onClick={() =>
-              setPage((prev) =>
-                Math.min(
-                  totalPages,
-                  prev + 1
-                )
-              )
-            }
+            disabled={page === totalPages}
+            onClick={() => setPage((prev) => Math.min(totalPages, prev + 1))}
           >
             Next
           </button>
-
         </div>
       )}
 
@@ -439,9 +327,7 @@ export default function ShopInfo() {
         <EditMedicineModal
           product={editingProduct}
           shopId={shop._id}
-          onClose={() =>
-            setEditingProduct(null)
-          }
+          onClose={() => setEditingProduct(null)}
           onSuccess={async () => {
             setEditingProduct(null)
             await loadProducts()
@@ -454,14 +340,28 @@ export default function ShopInfo() {
       {deletingProduct && (
         <ConfirmDeleteModal
           product={deletingProduct}
-          onClose={() =>
-            setDeletingProduct(null)
-          }
+          onClose={() => setDeletingProduct(null)}
           onConfirm={handleDelete}
           loading={deleteLoading}
         />
       )}
 
+      {addingProduct && (
+  <AddToShopModal
+    product={addingProduct}
+    shopId={shop._id}
+    onClose={() =>
+      setAddingProduct(null)
+    }
+    onSuccess={async () => {
+      setAddingProduct(null)
+
+      // якщо зараз All medicine — просто
+      // перезавантажуємо список
+      await loadProducts()
+    }}
+  />
+)}
     </div>
   )
 }
