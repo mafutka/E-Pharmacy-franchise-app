@@ -11,15 +11,15 @@ import { usePathname } from "next/navigation"
 import scss from "./Header.module.scss"
 
 export default function Header({ isAuth }: { isAuth: boolean }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const pathname = usePathname();
-   const router = useRouter();
-  const logout = useAuthStore((s) => s.logout);
+  const [isOpen, setIsOpen] = useState(false)
+  const pathname = usePathname()
+  const router = useRouter()
+  const logout = useAuthStore((s) => s.logout)
 
-const handleLogout = async () => {
-  await logout();
-  router.replace("/login");
-};
+  const handleLogout = async () => {
+    await logout()
+    router.replace("/login")
+  }
 
   return (
     <header className={scss.header}>
@@ -45,15 +45,7 @@ const handleLogout = async () => {
             <div className={scss.menuGroup}>
               <Link
                 className={`${scss.navBtn} ${
-                  pathname === "/shop" ? scss.active : ""
-                }`}
-                href="/shop"
-              >
-                <span>Shop</span>
-              </Link>
-              <Link
-                className={`${scss.navBtn} ${
-                  pathname === "/medicine" ? scss.active : ""
+                  pathname.startsWith("/medicine") ? scss.active : ""
                 }`}
                 href="/medicine"
               >
@@ -61,7 +53,15 @@ const handleLogout = async () => {
               </Link>
               <Link
                 className={`${scss.navBtn} ${
-                  pathname === "/statistics" ? scss.active : ""
+                  pathname.startsWith("/shop") ? scss.active : ""
+                }`}
+                href="/shop"
+              >
+                <span>Shop</span>
+              </Link>
+              <Link
+                className={`${scss.navBtn} ${
+                  pathname.startsWith("/statistics") ? scss.active : ""
                 }`}
                 href="/statistics"
               >
@@ -69,7 +69,9 @@ const handleLogout = async () => {
               </Link>
             </div>
 
-            <SubmitBtn className={scss.logoutBtn} onClick={handleLogout}>Logout</SubmitBtn>
+            <SubmitBtn className={scss.logoutBtn} onClick={handleLogout}>
+              Logout
+            </SubmitBtn>
           </nav>
           {isOpen && (
             <div className={scss.overlay} onClick={() => setIsOpen(false)} />

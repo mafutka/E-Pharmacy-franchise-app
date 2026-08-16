@@ -7,7 +7,7 @@ import { RegisterFormData } from "@/types/auth"
 import { registerSchema } from "@/validation/authSchemas"
 import { ValidationError, ValidationErrorItem } from "joi"
 import { registerUser } from "@/services/authApi"
-import { getMyShop } from "@/services/shopApi" // ✅ ДОДАЛИ
+import { getMyShop } from "@/services/shopApi" 
 import { useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"

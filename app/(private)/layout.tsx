@@ -4,6 +4,10 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { useAuthStore } from "@/store/authStore"
 import { getMyShop } from "@/services/shopApi"
+import Header from "@/components/Header/Header"
+import Footer from "@/components/Footer/Footer"
+
+import scss from "./layout.module.scss"
 
 export default function Layout({
   children,
@@ -24,7 +28,7 @@ export default function Layout({
     if (!isInitialized) return
 
     if (!token) {
-      router.push("/login")
+      router.replace("/login")
       return
     }
 
@@ -33,7 +37,7 @@ export default function Layout({
         const shop = await getMyShop()
 
         if (!shop) {
-          router.push("/create-shop")
+          router.replace("/create-shop")
         }
       } catch {
         router.push("/create-shop")
@@ -49,5 +53,15 @@ export default function Layout({
     return <>Loading...</>
   }
 
-  return <>{children}</>
+  return (
+  <div className={scss.privateLayout}>
+    <Header isAuth={true} />
+
+    <main className={scss.main}>
+      {children}
+    </main>
+
+    <Footer />
+  </div>
+)
 }
