@@ -21,6 +21,7 @@ import AddToShopModal from "../MedicineModal/AddToShopModal"
 import SubmitBtn from "@/components/SubmitBtn/SubmitBtn"
 
 import scss from "./Shop.module.scss"
+import SubmitBtnLight from "../SubmitBtn/SubmitBtnLight"
 
 export default function ShopInfo() {
   const router = useRouter()
@@ -200,11 +201,11 @@ export default function ShopInfo() {
           <span>{shop.phone}</span>
         </div>
       </div>
-
-      <SubmitBtn onClick={() => router.push("/edit-shop")}>Edit data</SubmitBtn>
+<div className={scss.keyButtons}>
+      <SubmitBtnLight onClick={() => router.push("/edit-shop")}>Edit data</SubmitBtnLight>
 
       <SubmitBtn onClick={() => setIsModalOpen(true)}>Add medicine</SubmitBtn>
-
+</div>
       {/* ADD */}
 
       {isModalOpen && (
