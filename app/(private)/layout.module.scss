@@ -9,12 +9,14 @@
   flex: 1;
 }
 
-// .privateLayout {
-//   min-height: 100vh;
-//   display: flex;
-//   flex-direction: column;
-// }
+.privateLayout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding-top: 25px;
+  gap: 60px;
+}
 
-// .main {
-//   flex: 1;
-// }
+.main {
+  flex: 1;
+}
