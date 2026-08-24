@@ -177,37 +177,41 @@ export default function ShopInfo() {
   // =========================
 
   return (
-    <div className={scss.info}>
-      <h3>{shop.name}</h3>
-
+    <div className={scss.shop}>
+      <h2>{shop.name}</h2>
+<div className={scss.shopInfo}>
+  <div className={scss.info}>
       <p>
-        Owner: <span>{shop.owner}</span>
+         <span className={scss.graySpan}>Owner: </span>{shop.owner}
       </p>
 
       <div className={scss.contacts}>
-        <div>
+        <div className={scss.contact}>
           <svg className={scss.icon}>
             <use href="/sprite.svg#icon-map-pin" />
           </svg>
 
-          <span>{shop.address}</span>
+          <span className={scss.graySpan}>{shop.address}</span>
         </div>
 
-        <div>
+        <div className={scss.contact}>
           <svg className={scss.icon}>
             <use href="/sprite.svg#icon-phone" />
           </svg>
 
-          <span>{shop.phone}</span>
+          <span className={scss.graySpan}>{shop.phone}</span>
         </div>
       </div>
+      </div>
 <div className={scss.keyButtons}>
-      <SubmitBtnLight onClick={() => router.push("/edit-shop")}>Edit data</SubmitBtnLight>
+      <SubmitBtnLight className={scss.keyBtn} onClick={() => router.push("/edit-shop")}>Edit data</SubmitBtnLight>
 
-      <SubmitBtn onClick={() => setIsModalOpen(true)}>Add medicine</SubmitBtn>
+      <SubmitBtn className={scss.keyBtn} onClick={() => setIsModalOpen(true)}>Add medicine</SubmitBtn>
+</div>
+
 </div>
       {/* ADD */}
-
+<div className={scss.store}>
       {isModalOpen && (
         <AddMedicineModal
           shopId={shop._id}
@@ -363,6 +367,7 @@ export default function ShopInfo() {
     }}
   />
 )}
+</div>
     </div>
   )
 }
