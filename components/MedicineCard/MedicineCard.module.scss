@@ -1,0 +1,39 @@
+@use "../../styles/abstracts/variables" as v;
+
+.medicineCard {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.imgCard {
+    display: flex;
+    justify-content: center;
+    border-radius: 20px;
+    border: 1.15px solid rgba(89, 177, 122, 0.6);;
+}
+.productInfo {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: v.$white;
+}
+
+.product {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+}
+.category {
+    color: v.$dark-gray;
+    margin-bottom: 17px;
+}
+.cardButtons {
+    display: flex;
+    gap: 8px;
+    border-radius: 24px;
+}
+.cardBtn {
+    border-radius: 24px;
+    padding: 10px 25px;
+}

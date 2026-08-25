@@ -1,5 +1,7 @@
 import { Product } from "@/types/shop"
 import scss from "./MedicineCard.module.scss"
+import SubmitBtn from "../SubmitBtn/SubmitBtn"
+import SubmitBtnLight from "../SubmitBtn/SubmitBtnLight"
 
 type Props = {
    product: Product
@@ -20,33 +22,42 @@ export default function MedicineCard({
 }: Props) {
   return (
     <article className={scss.card}>
-      <div>
+      <div className={scss.medicineCard}>
+        <div className={scss.imgCard}>
         {product.image && (
+        
           <img
             src={`${process.env.NEXT_PUBLIC_SERVER_URL}${product.image}`}
             alt={product.name}
             width={100}
           />
         )}
+        </div>
+        <div className={scss.productInfo}>
+        <div className={scss.product}>
         <h4>{product.name}</h4>
-        <p>{product.category}</p>
-        <strong>{product.price}$</strong>
+         <strong>{product.price}$</strong>
+         </div>
+        <p className={scss.category}>{product.category}</p>
+       
         {tab === "shop" ? (
-  <>
-    <button
+  <div className={scss.cardButtons}>
+    <SubmitBtn
+    className={scss.cardBtn}
       type="button"
       onClick={onEdit}
     >
       Edit
-    </button>
+    </SubmitBtn>
 
-    <button
+    <SubmitBtnLight
+    className={scss.cardBtn}
       type="button"
       onClick={onDelete}
     >
       Delete
-    </button>
-  </>
+    </SubmitBtnLight>
+  </div>
 ) : (
   <>
     <button
@@ -64,6 +75,7 @@ export default function MedicineCard({
     </button>
   </>
 )}
+      </div>
       </div>
     </article>
   )
