@@ -8,8 +8,16 @@
 .imgCard {
     display: flex;
     justify-content: center;
+    align-items: center;
     border-radius: 20px;
-    border: 1.15px solid rgba(89, 177, 122, 0.6);;
+    border: 1.15px solid rgba(89, 177, 122, 0.6);
+    padding: 30px;
+}
+
+.imgCard img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
 }
 .productInfo {
     display: flex;
