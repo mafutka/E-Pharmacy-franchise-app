@@ -59,13 +59,14 @@ export default function MedicineCard({
     </SubmitBtnLight>
   </div>
 ) : (
-  <>
-    <button
+  <div className={scss.allButtons}>
+    <SubmitBtn
+    className={scss.cardBtn}
       type="button"
       onClick={onAddToShop}
     >
       Add to shop
-    </button>
+    </SubmitBtn>
 
     <button
       type="button"
@@ -73,7 +74,7 @@ export default function MedicineCard({
     >
       Details
     </button>
-  </>
+  </div>
 )}
       </div>
       </div>

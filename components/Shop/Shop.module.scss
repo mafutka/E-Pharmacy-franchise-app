@@ -72,3 +72,14 @@
   border-bottom: 3px solid v.$green;
   margin-bottom: -1px;
 }
+
+.filterBtn {
+    border-radius: 24px;
+    padding: 10px 25px;
+}
+
+.filters {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}

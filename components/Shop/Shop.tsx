@@ -264,9 +264,9 @@ export default function ShopInfo() {
             onChange={(e) => setSearch(e.target.value)}
           />
 
-          <button type="button" onClick={handleFilter}>
+          <SubmitBtn className={scss.filterBtn} type="button" onClick={handleFilter}>
             Filter
-          </button>
+          </SubmitBtn>
         </div>
       )}
 
