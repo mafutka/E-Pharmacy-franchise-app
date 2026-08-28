@@ -1,24 +1,29 @@
 @use "./variables" as v;
-@mixin input-base {
+@mixin field-base {
   font-family: v.$font-main;
   font-weight: 400;
   font-size: 12px;
   line-height: 150%;
   color: v.$black;
-  
-  padding: 13px 15px;
+
   border: 1px solid v.$input-border;
   border-radius: 60px;
 
   outline: none;
+  background: v.$white;
+
+  &:focus {
+    border-color: v.$green;
+  }
+}
+
+@mixin input-base {
+  @include field-base;
+
+  padding: 13px 15px;
 
   &::placeholder {
     color: v.$placeholder;
     font-family: v.$font-main;
   }
-
-  &:focus {
-    border-color: v.$green;
-  }
-
 }

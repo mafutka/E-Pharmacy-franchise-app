@@ -1,19 +1,30 @@
 @use '../../styles/abstracts/mixins';
+@use "../../styles/abstracts/variables" as v;
 
 .input {
-    @include mixins.input-base;
+  width: 100%;
 }
+
 .field {
+  @include mixins.field-base;
+
   display: flex;
   align-items: center;
 
+  padding: 13px 15px;
+
   input,
-  textarea,
-  select {
+  textarea {
     width: 100%;
     border: none;
     outline: none;
     background: transparent;
+
     font: inherit;
+    color: inherit;
+
+    &::placeholder {
+      color: v.$placeholder;
+    }
   }
 }

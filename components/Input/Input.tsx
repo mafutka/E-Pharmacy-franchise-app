@@ -8,7 +8,7 @@ export default function Input({
   children,
 }: InputProps) {
   return (
-    <div className={scss.input}>
+    <div className={`${scss.input} ${className}`}>
       {label && <label className={scss.label}>{label}</label>}
 
       <div className={`${scss.field} ${error ? scss.errorField : ""}`}>

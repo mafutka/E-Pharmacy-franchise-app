@@ -2,7 +2,8 @@
 
 import { useCallback, useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-
+import Input from "../Input/Input"
+import Select from "../Select/Select"
 import { getMyShop } from "@/services/shopApi"
 
 import {
@@ -244,25 +245,34 @@ export default function ShopInfo() {
 
       {tab === "all" && (
         <div className={scss.filters}>
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          >
-            <option value="">Product category</option>
+          <Select
+  value={category}
+  onChange={setCategory}
+  placeholder="Product category"
+  options={[
+    {
+      value: "painkiller",
+      label: "Painkiller",
+    },
+    {
+      value: "antibiotic",
+      label: "Antibiotic",
+    },
+    {
+      value: "vitamins",
+      label: "Vitamins",
+    },
+  ]}
+/>
 
-            <option value="painkiller">Painkiller</option>
-
-            <option value="antibiotic">Antibiotic</option>
-
-            <option value="vitamins">Vitamins</option>
-          </select>
-
-          <input
-            type="text"
-            placeholder="Search medicine"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
+<Input className={scss.searchInput}>
+  <input
+    type="text"
+    placeholder="Search medicine"
+    value={search}
+    onChange={(e) => setSearch(e.target.value)}
+  />
+</Input>
 
           <SubmitBtn className={scss.filterBtn} type="button" onClick={handleFilter}>
             Filter
