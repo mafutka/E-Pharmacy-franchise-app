@@ -26,5 +26,9 @@
     &::placeholder {
       color: v.$placeholder;
     }
+    &:hover,
+  &:focus {
+    border-color: v.$green;
+  }
   }
 }
