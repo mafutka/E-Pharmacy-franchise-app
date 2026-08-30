@@ -180,204 +180,220 @@ export default function ShopInfo() {
   return (
     <div className={scss.shop}>
       <h2>{shop.name}</h2>
-<div className={scss.shopInfo}>
-  <div className={scss.info}>
-      <p>
-         <span className={scss.graySpan}>Owner: </span>{shop.owner}
-      </p>
+      <div className={scss.shopInfo}>
+        <div className={scss.info}>
+          <p>
+            <span className={scss.graySpan}>Owner: </span>
+            {shop.owner}
+          </p>
 
-      <div className={scss.contacts}>
-        <div className={scss.contact}>
-          <svg className={scss.icon}>
-            <use href="/sprite.svg#icon-map-pin" />
-          </svg>
+          <div className={scss.contacts}>
+            <div className={scss.contact}>
+              <svg className={scss.icon}>
+                <use href="/sprite.svg#icon-map-pin" />
+              </svg>
 
-          <span className={scss.graySpan}>{shop.address}</span>
+              <span className={scss.graySpan}>{shop.address}</span>
+            </div>
+
+            <div className={scss.contact}>
+              <svg className={scss.icon}>
+                <use href="/sprite.svg#icon-phone" />
+              </svg>
+
+              <span className={scss.graySpan}>{shop.phone}</span>
+            </div>
+          </div>
         </div>
+        <div className={scss.keyButtons}>
+          <SubmitBtnLight
+            className={scss.keyBtn}
+            onClick={() => router.push("/edit-shop")}
+          >
+            Edit data
+          </SubmitBtnLight>
 
-        <div className={scss.contact}>
-          <svg className={scss.icon}>
-            <use href="/sprite.svg#icon-phone" />
-          </svg>
-
-          <span className={scss.graySpan}>{shop.phone}</span>
-        </div>
-      </div>
-      </div>
-<div className={scss.keyButtons}>
-      <SubmitBtnLight className={scss.keyBtn} onClick={() => router.push("/edit-shop")}>Edit data</SubmitBtnLight>
-
-      <SubmitBtn className={scss.keyBtn} onClick={() => setIsModalOpen(true)}>Add medicine</SubmitBtn>
-</div>
-
-</div>
-      {/* ADD */}
-<div className={scss.store}>
-      {isModalOpen && (
-        <AddMedicineModal
-          shopId={shop._id}
-          onClose={() => setIsModalOpen(false)}
-          onSuccess={loadProducts}
-        />
-      )}
-
-      {/* TABS */}
-
-      <div className={scss.tabs}>
-        <button
-          type="button"
-          onClick={() => handleTabChange("shop")}
-          className={tab === "shop" ? scss.activeTab : ""}
-        >
-          Drug store
-        </button>
-
-        <button
-          type="button"
-          onClick={() => handleTabChange("all")}
-          className={tab === "all" ? scss.activeTab : ""}
-        >
-          All medicine
-        </button>
-      </div>
-
-      {/* FILTERS ONLY FOR ALL MEDICINE */}
-
-      {tab === "all" && (
-        <div className={scss.filters}>
-          <Select
-  value={category}
-  onChange={setCategory}
-  placeholder="Product category"
-  options={[
-    {
-      value: "painkiller",
-      label: "Painkiller",
-    },
-    {
-      value: "antibiotic",
-      label: "Antibiotic",
-    },
-    {
-      value: "vitamins",
-      label: "Vitamins",
-    },
-  ]}
-/>
-
-<Input className={scss.searchInput}>
-  <input
-    type="text"
-    placeholder="Search medicine"
-    value={search}
-    onChange={(e) => setSearch(e.target.value)}
-  />
-</Input>
-
-          <SubmitBtn className={scss.filterBtn} type="button" onClick={handleFilter}>
-            Filter
+          <SubmitBtn
+            className={scss.keyBtn}
+            onClick={() => setIsModalOpen(true)}
+          >
+            Add medicine
           </SubmitBtn>
         </div>
-      )}
+      </div>
+      {/* ADD */}
+      <div className={scss.store}>
+        {isModalOpen && (
+          <AddMedicineModal
+            shopId={shop._id}
+            onClose={() => setIsModalOpen(false)}
+            onSuccess={loadProducts}
+          />
+        )}
 
-      {/* PRODUCTS */}
+        {/* TABS */}
 
-      {productsLoading ? (
-        <p>Loading products...</p>
-      ) : (
-        <div>
-          {products.length === 0 ? (
-            <p>No products found</p>
-          ) : (
-            products.map((product) => (
-              <MedicineCard
-                key={product._id}
-                product={product}
-                tab={tab}
-                onDetails={() => router.push(`/medicine/${product._id}`)}
-                onEdit={
-                  tab === "shop" ? () => setEditingProduct(product) : undefined
-                }
-                onDelete={
-                  tab === "shop" ? () => setDeletingProduct(product) : undefined
-                }
-                onAddToShop={
-                  tab === "all" ? () => setAddingProduct(product) : undefined
-                }
+        <div className={scss.tabs}>
+          <button
+            type="button"
+            onClick={() => handleTabChange("shop")}
+            className={tab === "shop" ? scss.activeTab : ""}
+          >
+            Drug store
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleTabChange("all")}
+            className={tab === "all" ? scss.activeTab : ""}
+          >
+            All medicine
+          </button>
+        </div>
+
+        {/* FILTERS ONLY FOR ALL MEDICINE */}
+
+        {tab === "all" && (
+          <div className={scss.filters}>
+            <Select
+              value={category}
+              onChange={setCategory}
+              placeholder="Product category"
+              options={[
+                {
+                  value: "painkiller",
+                  label: "Painkiller",
+                },
+                {
+                  value: "antibiotic",
+                  label: "Antibiotic",
+                },
+                {
+                  value: "vitamins",
+                  label: "Vitamins",
+                },
+              ]}
+            />
+
+            <Input className={scss.searchInput}>
+              <input
+                type="text"
+                placeholder="Search medicine"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
               />
-            ))
-          )}
-        </div>
-      )}
+            </Input>
 
-      {/* PAGINATION */}
+            <SubmitBtn
+              className={scss.filterBtn}
+              type="button"
+              onClick={handleFilter}
+            >
+              Filter
+            </SubmitBtn>
+          </div>
+        )}
 
-      {totalPages > 1 && (
-        <div className={scss.pagination}>
-          <button
-            type="button"
-            disabled={page === 1}
-            onClick={() => setPage((prev) => Math.max(1, prev - 1))}
-          >
-            Previous
-          </button>
+        {/* PRODUCTS */}
 
-          <span>
-            {page} / {totalPages}
-          </span>
+        {productsLoading ? (
+          <p>Loading products...</p>
+        ) : (
+          <div>
+            {products.length === 0 ? (
+              <p>No products found</p>
+            ) : (
+              products.map((product) => (
+                <MedicineCard
+                  key={product._id}
+                  product={product}
+                  tab={tab}
+                  onDetails={() => router.push(`/medicine/${product._id}`)}
+                  onEdit={
+                    tab === "shop"
+                      ? () => setEditingProduct(product)
+                      : undefined
+                  }
+                  onDelete={
+                    tab === "shop"
+                      ? () => setDeletingProduct(product)
+                      : undefined
+                  }
+                  onAddToShop={
+                    tab === "all" ? () => setAddingProduct(product) : undefined
+                  }
+                />
+              ))
+            )}
+          </div>
+        )}
 
-          <button
-            type="button"
-            disabled={page === totalPages}
-            onClick={() => setPage((prev) => Math.min(totalPages, prev + 1))}
-          >
-            Next
-          </button>
-        </div>
-      )}
+        {/* PAGINATION */}
 
-      {/* EDIT */}
+        {totalPages > 1 && (
+          <div className={scss.pagination}>
+            <button
+              type="button"
+              disabled={page === 1}
+              onClick={() => setPage((prev) => Math.max(1, prev - 1))}
+            >
+              Previous
+            </button>
 
-      {editingProduct && (
-        <EditMedicineModal
-          product={editingProduct}
-          shopId={shop._id}
-          onClose={() => setEditingProduct(null)}
-          onSuccess={async () => {
-            setEditingProduct(null)
-            await loadProducts()
-          }}
-        />
-      )}
+            <span>
+              {page} / {totalPages}
+            </span>
 
-      {/* DELETE */}
+            <button
+              type="button"
+              disabled={page === totalPages}
+              onClick={() => setPage((prev) => Math.min(totalPages, prev + 1))}
+            >
+              Next
+            </button>
+          </div>
+        )}
 
-      {deletingProduct && (
-        <ConfirmDeleteModal
-          product={deletingProduct}
-          onClose={() => setDeletingProduct(null)}
-          onConfirm={handleDelete}
-          loading={deleteLoading}
-        />
-      )}
+        {/* EDIT */}
 
-      {addingProduct && (
-  <AddToShopModal
-    product={addingProduct}
-    shopId={shop._id}
-    onClose={() =>
-      setAddingProduct(null)
-    }
-    onSuccess={async () => {
-      setAddingProduct(null)
+        {editingProduct && (
+          <EditMedicineModal
+            product={editingProduct}
+            shopId={shop._id}
+            onClose={() => setEditingProduct(null)}
+            onSuccess={async () => {
+              setEditingProduct(null)
+              await loadProducts()
+            }}
+          />
+        )}
 
-      // якщо зараз All medicine — просто
-      // перезавантажуємо список
-      await loadProducts()
-    }}
-  />
-)}
-</div>
+        {/* DELETE */}
+
+        {deletingProduct && (
+          <ConfirmDeleteModal
+            product={deletingProduct}
+            onClose={() => setDeletingProduct(null)}
+            onConfirm={handleDelete}
+            loading={deleteLoading}
+          />
+        )}
+
+        {addingProduct && (
+          <AddToShopModal
+            product={addingProduct}
+            shopId={shop._id}
+            onClose={() => setAddingProduct(null)}
+            onSuccess={async () => {
+              setAddingProduct(null)
+
+              // якщо зараз All medicine — просто
+              // перезавантажуємо список
+              await loadProducts()
+            }}
+          />
+        )}
+      </div>
     </div>
   )
 }

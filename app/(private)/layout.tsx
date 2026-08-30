@@ -55,10 +55,12 @@ export default function Layout({
 
   return (
   <div className={scss.privateLayout}>
-    <Header isAuth={true} />
+    <div className={scss.container}> <Header isAuth={true} /></div>
+   
 
     <main className={scss.main}>
-      {children}
+       <div className={scss.container}>{children}</div>
+      
     </main>
 
     <Footer />
