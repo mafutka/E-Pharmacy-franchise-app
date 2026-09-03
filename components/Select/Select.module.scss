@@ -7,22 +7,34 @@
 }
 
 .control {
-  @include mixins.field-base;
-
   width: 100%;
-  padding: 13px 15px;
+  min-height: 42px;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  cursor: pointer;
-  text-align: left;
+  padding: 13px 15px;
 
-  &:hover,
-  &:focus {
-    border-color: v.$green;
-  }
+  border: 1px solid v.$input-border;
+  border-radius: 60px;
+
+  background: transparent;
+
+  font-family: v.$font-main;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 150%;
+
+  color: v.$black;
+
+  cursor: pointer;
+}
+
+.control:hover,
+.control:focus {
+  border-color: v.$green;
+  outline: none;
 }
 
 .placeholder {
@@ -47,23 +59,35 @@
   transform: rotate(180deg);
 }
 
-.dropdown {
-  position: absolute;
-  z-index: 20;
-
-  top: calc(100% + 6px);
-  left: 0;
-
+.control {
   width: 100%;
+  min-height: 42px;
 
-  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 13px 15px;
 
   border: 1px solid v.$input-border;
-  border-radius: 16px;
+  border-radius: 60px;
 
-  background: v.$white;
+  background: transparent;
 
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  font-family: v.$font-main;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 150%;
+
+  color: v.$black;
+
+  cursor: pointer;
+}
+
+.control:hover,
+.control:focus {
+  border-color: v.$green;
+  outline: none;
 }
 
 .option {
@@ -77,17 +101,19 @@
   border-radius: 10px;
 
   background: transparent;
-  font-family: v.$font-main;
-  line-height: 150%;
-  color: v.$dark-gray;
 
+  font-family: v.$font-main;
+  font-size: 12px;
+  line-height: 150%;
   text-align: left;
 
-  cursor: pointer;
+  color: v.$black;
 
-  &:hover {
-    background: v.$light-gray;
-  }
+  cursor: pointer;
+}
+
+.option:hover {
+  background: v.$light-gray;
 }
 
 .selected {
