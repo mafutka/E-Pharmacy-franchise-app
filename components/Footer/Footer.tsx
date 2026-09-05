@@ -6,7 +6,7 @@ export default function Footer() {
     <footer className={scss.footer}>
       <div className={scss.container}>
         <Logo variant="footer" />
-
+<p>Get the medicine to help you feel better, get back to your active life, and enjoy every moment.</p>
         {/* тут потім navigation */}
       </div>
     </footer>
