@@ -25,3 +25,27 @@
     padding: 24px 100px;
   }
 }
+
+.topFooter {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+.footerText {
+  color: v.$white;
+}
+.menuGroup {
+  display: flex;
+  gap: 32px;
+}
+
+.navBtn {
+  color: v.$white;
+  font-weight: 600;
+font-size: 14px;
+}
+
+.mediia {
+  display: none;
+}
