@@ -6,6 +6,8 @@
 }
 
 .container {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   max-width: 375px;
   margin: 0 auto;
@@ -14,6 +16,7 @@
 
 @media (min-width: 768px) {
   .container {
+    flex-direction: row;
     max-width: 768px;
     padding: 24px 32px;
   }
@@ -23,6 +26,7 @@
   .container {
     max-width: 1440px;
     padding: 24px 100px;
+    justify-content: space-between;
   }
 }
 
@@ -35,6 +39,12 @@
 .footerText {
   color: v.$white;
 }
+
+@media (min-width: 768px) {
+  .topFooter {
+    max-width: 261px;
+  }
+}
 .menuGroup {
   display: flex;
   gap: 32px;
@@ -46,6 +56,12 @@
 font-size: 14px;
 }
 
-.mediia {
+.media {
   display: none;
+}
+
+@media (min-width: 768px) {
+  .media {
+  display: flex
+}
 }

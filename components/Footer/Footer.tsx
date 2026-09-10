@@ -42,7 +42,7 @@ export default function Footer() {
               <span>Statistics</span>
             </Link>
           </div>
-          <div className={scss.mediia}>
+          <div className={scss.media}>
             <p>Icons</p>
           </div>
         </div>
