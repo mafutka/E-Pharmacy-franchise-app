@@ -47,6 +47,8 @@ export default function Footer() {
           </div>
         </div>
       </div>
+
+      <p>© E-Pharmacy 2023. All Rights Reserved</p>
     </footer>
   )
 }
