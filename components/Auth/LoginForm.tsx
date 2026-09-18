@@ -12,6 +12,7 @@ import { useState } from "react"
 import Link from "next/link"
 import { useAuthStore } from "@/store/authStore"
 import { useRouter } from "next/navigation"
+import axios from "axios"
 import scss from "./Auth.module.scss"
 
 export default function LoginForm() {
@@ -23,6 +24,7 @@ export default function LoginForm() {
   const [errors, setErrors] = useState<
     Partial<Record<keyof LoginFormData, string>>
   >({})
+
   const [serverError, setServerError] = useState("")
 
   const onSubmit = async (data: LoginFormData) => {
@@ -34,7 +36,9 @@ export default function LoginForm() {
     })
 
     if (error) {
-      const formattedErrors: Partial<Record<keyof LoginFormData, string>> = {}
+      const formattedErrors: Partial<
+        Record<keyof LoginFormData, string>
+      > = {}
 
       error.details.forEach((err: ValidationErrorItem) => {
         const field = err.path[0] as keyof LoginFormData
@@ -48,29 +52,37 @@ export default function LoginForm() {
     try {
       const res = await loginUser(data)
 
-     setToken(res.token)
+      setToken(res.token)
 
-const shop = await getMyShop().catch(() => null)
+      const shop = await getMyShop().catch(() => null)
 
-if (shop) {
-  router.push("/shop")
-} else {
-  router.push("/create-shop")
-}
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        setServerError(err.message)
+      if (shop) {
+        router.push("/shop")
       } else {
-        setServerError("Invalid credentials")
+        router.push("/create-shop")
+      }
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        setServerError(
+          err.response?.data?.message || "Something went wrong"
+        )
+      } else {
+        setServerError("Something went wrong")
       }
     }
   }
 
   return (
-    <form className={scss.form} onSubmit={handleSubmit(onSubmit)}>
+    <form
+      className={scss.form}
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <div className={scss.authTop}>
         <Input error={errors.email}>
-          <input placeholder="Email address" {...register("email")} />
+          <input
+            placeholder="Email address"
+            {...register("email")}
+          />
         </Input>
 
         <Input error={errors.password}>
@@ -81,13 +93,25 @@ if (shop) {
           />
         </Input>
       </div>
+
       <div className={scss.authBottom}>
-        <SubmitBtn type="submit" className={scss.authBtn}>
+        <SubmitBtn
+          type="submit"
+          className={scss.authBtn}
+        >
           Log in
         </SubmitBtn>
 
-        {serverError && <p>{serverError}</p>}
-        <Link href="/register" className={scss.link}>
+        {serverError && (
+          <p className={scss.serverError}>
+            {serverError}
+          </p>
+        )}
+
+        <Link
+          href="/register"
+          className={scss.link}
+        >
           Don’t have an account?
         </Link>
       </div>
