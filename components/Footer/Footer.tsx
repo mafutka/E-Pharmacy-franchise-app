@@ -46,9 +46,16 @@ export default function Footer() {
             <p>Icons</p>
           </div>
         </div>
+              <hr className={scss.line}/>
+<div className={scss.bottom}>
+      <p className={scss.bottom}>© E-Pharmacy 2026. All Rights Reserved </p>
+      <span className={scss.devider}>|</span>
+      <p>Privacy Policy</p>
+      <span className={scss.devider}>|</span>
+      <p>Terms & Conditions</p>
+    </div>
       </div>
 
-      <p>© E-Pharmacy 2023. All Rights Reserved</p>
     </footer>
   )
 }
