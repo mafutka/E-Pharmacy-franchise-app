@@ -51,7 +51,15 @@ export default function Footer() {
             </div>
 
             <div className={scss.media}>
-              <p>Icons</p>
+              <svg className={scss.icon}>
+                <use href="/sprite.svg#icon-facebook" />
+              </svg>
+              <svg className={scss.icon}>
+                <use href="/sprite.svg#icon-instagram" />
+              </svg>
+              <svg className={scss.icon}>
+                <use href="/sprite.svg#icon-youtube" />
+              </svg>
             </div>
           </div>
         </div>
