@@ -100,6 +100,7 @@
 
   .media {
     display: flex;
+    gap: 12px;
   }
 }
 
@@ -115,4 +116,11 @@
     flex-direction: row;
     justify-content: space-between;
   }
+}
+
+.icon {
+  width: 28px;
+height: 28px;
+fill: v.$white;
+opacity: 0,8;
 }
