@@ -1,8 +1,13 @@
 @use "../abstracts/variables" as v;
 
+html {
+  box-sizing: border-box;
+}
 body {
   font-family: v.$font-main;
     background-color: v.$background-color;
+    margin: 0;
+    padding: 0;
 }
 
 $heading-weight: 600;
