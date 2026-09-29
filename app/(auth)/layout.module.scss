@@ -38,30 +38,32 @@ font-weight: 600;
 font-size: 28px;
   line-height: 121%;
 }
+.green {
+  font-weight: 600;
+font-size: 28px;
+  //  font-size: 54px;
+  color: v.$green;
+}
 @media (min-width: 768px) {
   .heading {
 
     width: 614px;
     font-size: 54px;
     line-height: 111%;
-  }
-}
-@media (min-width: 768px) {
-  .heading {
     margin-bottom: 0;
   }
+  .green {
+
+   font-size: 54px;
+
 }
+}
+
 @media (min-width: 768px) {
   .pill {
     width: 179px;
     height: 175px;
   }
-}
-.green {
-  font-weight: 600;
-font-size: 28px;
-  //  font-size: 54px;
-  color: v.$green;
 }
 
 .bgImage {
