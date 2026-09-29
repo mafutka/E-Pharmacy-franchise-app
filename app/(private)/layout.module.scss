@@ -1,5 +1,5 @@
 .layout {
-     min-height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   gap: 64px;
@@ -13,21 +13,19 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-margin: 0 auto;
-justify-content: center;
-align-items: center;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
 }
 
 .main {
   flex: 1;
   // padding-top: 60px;
-
 }
 
 .container {
   display: flex;
   flex-direction: column;
   gap: 64px;
-    padding: 25px 20px;
+  padding: 25px 20px;
 }
-

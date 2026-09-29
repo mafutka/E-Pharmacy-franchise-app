@@ -34,7 +34,8 @@
   }
 }
 .heading {
-
+font-weight: 600;
+font-size: 28px;
   line-height: 121%;
 }
 @media (min-width: 768px) {
@@ -57,7 +58,9 @@
   }
 }
 .green {
-   font-size: 54px;
+  font-weight: 600;
+font-size: 28px;
+  //  font-size: 54px;
   color: v.$green;
 }
 
