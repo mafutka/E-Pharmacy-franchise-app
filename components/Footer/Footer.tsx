@@ -9,14 +9,13 @@ export default function Footer() {
   return (
     <footer className={scss.footer}>
       <div className={scss.container}>
-
         <div className={scss.footerTop}>
           <div className={scss.topFooter}>
             <Logo variant="footer" />
 
             <p className={scss.footerText}>
-              Get the medicine to help you feel better, get back to your
-              active life, and enjoy every moment.
+              Get the medicine to help you feel better, get back to your active
+              life, and enjoy every moment.
             </p>
           </div>
 
@@ -51,15 +50,21 @@ export default function Footer() {
             </div>
 
             <div className={scss.media}>
-              <svg className={scss.icon}>
-                <use href="/sprite.svg#icon-facebook" />
-              </svg>
-              <svg className={scss.icon}>
-                <use href="/sprite.svg#icon-instagram" />
-              </svg>
-              <svg className={scss.icon}>
-                <use href="/sprite.svg#icon-youtube" />
-              </svg>
+              <button>
+                <svg className={scss.icon}>
+                  <use href="/sprite.svg#icon-facebook" />
+                </svg>
+              </button>
+              <button>
+                <svg className={scss.icon}>
+                  <use href="/sprite.svg#icon-instagram" />
+                </svg>
+              </button>
+              <button>
+                <svg className={scss.icon}>
+                  <use href="/sprite.svg#icon-youtube" />
+                </svg>
+              </button>
             </div>
           </div>
         </div>
@@ -77,7 +82,6 @@ export default function Footer() {
 
           <p>Terms & Conditions</p>
         </div>
-
       </div>
     </footer>
   )
