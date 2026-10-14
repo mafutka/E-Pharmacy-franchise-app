@@ -52,8 +52,12 @@
 }
 
 .mediaButton {
+  width: 44px;
+height: 44px;
   background: transparent;
-  border: white;
+  border: 1px solid v.$border-white;
+  border-radius: 10px;
+padding: 8px
 }
 
 /* Роздільна лінія */
@@ -127,5 +131,5 @@
   width: 28px;
 height: 28px;
 fill: v.$white;
-opacity: 0,8;
+opacity: 0.8;
 }
