@@ -50,21 +50,41 @@ export default function Footer() {
             </div>
 
             <div className={scss.media}>
-              <button className={scss.mediaButton}>
+              <a
+                className={scss.mediaButton}
+                href="https://www.facebook.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+              >
                 <svg className={scss.icon}>
                   <use href="/sprite.svg#icon-facebook" />
                 </svg>
-              </button>
-              <button className={scss.mediaButton}>
+              </a>
+
+              <a
+                className={scss.mediaButton}
+                href="https://www.instagram.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+              >
                 <svg className={scss.icon}>
                   <use href="/sprite.svg#icon-instagram" />
                 </svg>
-              </button>
-              <button className={scss.mediaButton}>
+              </a>
+
+              <a
+                className={scss.mediaButton}
+                href="https://www.youtube.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="YouTube"
+              >
                 <svg className={scss.icon}>
                   <use href="/sprite.svg#icon-youtube" />
                 </svg>
-              </button>
+              </a>
             </div>
           </div>
         </div>
