@@ -297,36 +297,36 @@ export default function ShopInfo() {
         {/* PRODUCTS */}
 
         {productsLoading ? (
-          <p>Loading products...</p>
-        ) : (
-          <div>
-            {products.length === 0 ? (
-              <p>No products found</p>
-            ) : (
-              products.map((product) => (
-                <MedicineCard
-                  key={product._id}
-                  product={product}
-                  tab={tab}
-                  onDetails={() => router.push(`/medicine/${product._id}`)}
-                  onEdit={
-                    tab === "shop"
-                      ? () => setEditingProduct(product)
-                      : undefined
-                  }
-                  onDelete={
-                    tab === "shop"
-                      ? () => setDeletingProduct(product)
-                      : undefined
-                  }
-                  onAddToShop={
-                    tab === "all" ? () => setAddingProduct(product) : undefined
-                  }
-                />
-              ))
-            )}
-          </div>
-        )}
+  <p>Loading products...</p>
+) : products.length === 0 ? (
+  <p>No products found</p>
+) : (
+  <div className={scss.productsGrid}>
+    {products.map((product) => (
+      <MedicineCard
+        key={product._id}
+        product={product}
+        tab={tab}
+        onDetails={() => router.push(`/medicine/${product._id}`)}
+        onEdit={
+          tab === "shop"
+            ? () => setEditingProduct(product)
+            : undefined
+        }
+        onDelete={
+          tab === "shop"
+            ? () => setDeletingProduct(product)
+            : undefined
+        }
+        onAddToShop={
+          tab === "all"
+            ? () => setAddingProduct(product)
+            : undefined
+        }
+      />
+    ))}
+  </div>
+)}
 
         {/* PAGINATION */}
 
