@@ -6,8 +6,9 @@
 }
 
 .container {
+  box-sizing: border-box;
   width: 100%;
-  max-width: 375px;
+  max-width: 1440px;
   margin: 0 auto;
   padding: 24px 20px;
 }
@@ -94,7 +95,6 @@
 
 @media (min-width: 768px) {
   .container {
-    max-width: 768px;
     padding: 24px 32px;
   }
 
@@ -102,19 +102,28 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
+    gap: 32px;
   }
 
   .topFooter {
-    max-width: 261px;
+   max-width: 261px;
+    min-width: 0;
   }
 
   .bottomFooter {
     flex-direction: column;
     align-items: flex-start;
+    min-width: 0;
+  }
+
+   .menuGroup {
+    flex-wrap: wrap;
+    gap: 16px 24px;
   }
 
   .media {
-    display: flex;
+  display: flex;
+    flex-wrap: wrap;
     gap: 12px;
   }
 }
@@ -123,7 +132,6 @@
 
 @media (min-width: 1440px) {
   .container {
-    max-width: 1440px;
     padding: 40px 100px 24px;
   }
 
