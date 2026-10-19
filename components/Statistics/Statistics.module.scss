@@ -1,0 +1,19 @@
+
+
+  .transaction {
+    grid-template-columns: 72px minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .transactionBadge {
+    width: 72px;
+  }
+
+  .transactionDescription {
+    font-size: 14px;
+  }
+
+  .transactionAmount {
+    grid-column: 2;
+    justify-self: end;
+  }
