@@ -17,3 +17,53 @@
     grid-column: 2;
     justify-self: end;
   }
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.modal {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 24px;
+  background: #fff;
+  border-radius: 16px;
+}
+
+.modalClose {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  border: none;
+  background: transparent;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.modal h2 {
+  padding-right: 30px;
+  margin-bottom: 8px;
+}
+
+.modal h3 {
+  margin: 24px 0 12px;
+}
+
+.modal p {
+  margin-bottom: 12px;
+}
+
+@media (max-width: 767px) {
+  .modal {
+    padding: 20px 16px;
+  }
+}

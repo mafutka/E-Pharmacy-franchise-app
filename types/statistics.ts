@@ -1,21 +1,41 @@
-export type StatCard = {
-  id: string
-  label: string
-  value: string
-  icon: "products" | "suppliers" | "customers"
+export interface StatisticsResponse {
+  totalProducts: number;
+  totalSuppliers: number;
+  totalCustomers: number;
+  customers: Customer[];
+  transactions: Transaction[];
 }
 
-export type Customer = {
-  id: number
-  name: string
-  email: string
-  spent: string
+export interface Customer {
+  id: string;
+  name: string;
+  email: string;
+  spent: number;
 }
 
-export type Transaction = {
-  id: number
-  type: "Expense" | "Income" | "Error"
-  description: string
-  amount: string
+export interface CustomerMedicine {
+  productId: string;
+  name: string;
+  brand: string;
+  price: number;
+  quantity: number;
+  total: number;
 }
 
+export interface CustomerDetailsResponse {
+  customer: {
+    id: string;
+    name: string;
+    email: string;
+  };
+  medicines: CustomerMedicine[];
+  totalSpent: number;
+}
+
+export interface Transaction {
+  id: string;
+  type: "Income" | "Expense" | "Error";
+  description: string;
+  amount: number;
+  createdAt: string;
+}
