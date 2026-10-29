@@ -5,7 +5,8 @@ import { useEffect, useState } from "react";
 import type {
   StatisticsResponse,
   CustomerDetailsResponse,
-} from "@/types/statistics";
+} from "../../types/statistics";
+import { api } from "@/services/api";
 import scss from "./Statistics.module.scss";
 
 const API_URL =
@@ -51,31 +52,47 @@ export default function Statistics() {
   const [detailsError, setDetailsError] = useState("");
 
   useEffect(() => {
-    const fetchStatistics = async () => {
-      try {
-        setLoading(true);
-        setError("");
+const fetchStatistics = async () => {
+  try {
+    setLoading(true);
+    setError("");
 
-        const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
-        const response = await fetch(`${API_URL}/api/statistics`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+    console.log("API URL:", API_URL);
+    console.log("Token exists:", Boolean(token));
 
-        if (!response.ok) {
-          throw new Error("Failed to load statistics");
-        }
+    const response = await fetch(`${API_URL}/statistics`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-        const result: StatisticsResponse = await response.json();
-        setData(result);
-      } catch {
-        setError("Could not load statistics. Please try again.");
-      } finally {
-        setLoading(false);
-      }
-    };
+    const responseText = await response.text();
+
+    console.log("Statistics status:", response.status);
+    console.log("Statistics response:", responseText);
+
+    if (!response.ok) {
+      throw new Error(
+        `Statistics request failed: ${response.status} ${responseText}`
+      );
+    }
+
+    const result: StatisticsResponse = JSON.parse(responseText);
+    setData(result);
+  } catch (err) {
+    console.error("Statistics error:", err);
+
+    setError(
+      err instanceof Error
+        ? err.message
+        : "Could not load statistics."
+    );
+  } finally {
+    setLoading(false);
+  }
+};
 
     void fetchStatistics();
   }, []);
