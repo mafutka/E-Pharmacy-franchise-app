@@ -1,5 +1,11 @@
+@use "../../styles/abstracts/variables" as v;
 
+.icon {
+    width: 28px;
+height: 28px;
+fill: transparent;
 
+}
   .transaction {
     grid-template-columns: 72px minmax(0, 1fr);
     gap: 10px;

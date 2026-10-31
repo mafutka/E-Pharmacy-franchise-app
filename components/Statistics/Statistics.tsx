@@ -1,109 +1,97 @@
+"use client"
 
-"use client";
-
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react"
 import type {
   StatisticsResponse,
   CustomerDetailsResponse,
-} from "../../types/statistics";
-import { api } from "@/services/api";
-import scss from "./Statistics.module.scss";
+} from "../../types/statistics"
+import { api } from "@/services/api"
+import scss from "./Statistics.module.scss"
 
-const API_URL =
-  process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000"
 
 const formatMoney = (amount: number) =>
   amount.toLocaleString("en-US", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
-  });
+  })
 
 function StatIcon({ type }: { type: "products" | "suppliers" | "customers" }) {
   if (type === "products") {
     return (
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <ellipse cx="10" cy="5" rx="7" ry="3" />
-        <path d="M3 5v5c0 1.7 3.1 3 7 3" />
-        <path d="M17 8v2" />
-        <path d="M3 10v5c0 1.7 3.1 3 7 3" />
-        <ellipse cx="14" cy="14" rx="7" ry="3" />
-        <path d="M7 14v5c0 1.7 3.1 3 7 3s7-1.3 7-3v-5" />
+      <svg className={scss.icon}>
+        <use href="/sprite.svg#icon-coins" />
       </svg>
-    );
+    )
   }
 
   return (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-      <circle cx="10" cy="7" r="4" />
-      <path d="M20 21v-2a4 4 0 0 0-3-3.87" />
-      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-    </svg>
-  );
+  <svg className={scss.icon}>
+        <use href="/sprite.svg#icon-chels" />
+      </svg>
+  )
 }
 
 export default function Statistics() {
-  const [data, setData] = useState<StatisticsResponse | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [data, setData] = useState<StatisticsResponse | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState("")
   const [selectedCustomer, setSelectedCustomer] =
-    useState<CustomerDetailsResponse | null>(null);
-  const [detailsLoading, setDetailsLoading] = useState(false);
-  const [detailsError, setDetailsError] = useState("");
+    useState<CustomerDetailsResponse | null>(null)
+  const [detailsLoading, setDetailsLoading] = useState(false)
+  const [detailsError, setDetailsError] = useState("")
 
   useEffect(() => {
-const fetchStatistics = async () => {
-  try {
-    setLoading(true);
-    setError("");
+    const fetchStatistics = async () => {
+      try {
+        setLoading(true)
+        setError("")
 
-    const token = localStorage.getItem("token");
+        const token = localStorage.getItem("token")
 
-    console.log("API URL:", API_URL);
-    console.log("Token exists:", Boolean(token));
+        console.log("API URL:", API_URL)
+        console.log("Token exists:", Boolean(token))
 
-    const response = await fetch(`${API_URL}/statistics`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+        const response = await fetch(`${API_URL}/statistics`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
 
-    const responseText = await response.text();
+        const responseText = await response.text()
 
-    console.log("Statistics status:", response.status);
-    console.log("Statistics response:", responseText);
+        console.log("Statistics status:", response.status)
+        console.log("Statistics response:", responseText)
 
-    if (!response.ok) {
-      throw new Error(
-        `Statistics request failed: ${response.status} ${responseText}`
-      );
+        if (!response.ok) {
+          throw new Error(
+            `Statistics request failed: ${response.status} ${responseText}`,
+          )
+        }
+
+        const result: StatisticsResponse = JSON.parse(responseText)
+        setData(result)
+      } catch (err) {
+        console.error("Statistics error:", err)
+
+        setError(
+          err instanceof Error ? err.message : "Could not load statistics.",
+        )
+      } finally {
+        setLoading(false)
+      }
     }
 
-    const result: StatisticsResponse = JSON.parse(responseText);
-    setData(result);
-  } catch (err) {
-    console.error("Statistics error:", err);
-
-    setError(
-      err instanceof Error
-        ? err.message
-        : "Could not load statistics."
-    );
-  } finally {
-    setLoading(false);
-  }
-};
-
-    void fetchStatistics();
-  }, []);
+    void fetchStatistics()
+  }, [])
 
   const handleView = async (customerId: string) => {
     try {
-      setDetailsLoading(true);
-      setDetailsError("");
-      setSelectedCustomer(null);
+      setDetailsLoading(true)
+      setDetailsError("")
+      setSelectedCustomer(null)
 
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token")
 
       const response = await fetch(
         `${API_URL}/api/statistics/${customerId}/goods`,
@@ -111,24 +99,24 @@ const fetchStatistics = async () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
-      );
+        },
+      )
 
       if (!response.ok) {
-        throw new Error("Failed to load customer purchases");
+        throw new Error("Failed to load customer purchases")
       }
 
-      const result: CustomerDetailsResponse = await response.json();
-      setSelectedCustomer(result);
+      const result: CustomerDetailsResponse = await response.json()
+      setSelectedCustomer(result)
     } catch {
-      setDetailsError("Could not load customer purchases.");
+      setDetailsError("Could not load customer purchases.")
     } finally {
-      setDetailsLoading(false);
+      setDetailsLoading(false)
     }
-  };
+  }
 
   if (loading) {
-    return <main className={scss.statistics}>Loading statistics...</main>;
+    return <main className={scss.statistics}>Loading statistics...</main>
   }
 
   if (error || !data) {
@@ -137,7 +125,7 @@ const fetchStatistics = async () => {
         <h1 className={scss.pageTitle}>Statistics</h1>
         <p role="alert">{error || "No statistics available."}</p>
       </main>
-    );
+    )
   }
 
   const stats = [
@@ -159,7 +147,7 @@ const fetchStatistics = async () => {
       value: data.totalCustomers,
       icon: "customers" as const,
     },
-  ];
+  ]
 
   return (
     <main className={scss.statistics}>
@@ -263,9 +251,7 @@ const fetchStatistics = async () => {
             </article>
           ))}
 
-          {data.transactions.length === 0 && (
-            <p>No transactions for today</p>
-          )}
+          {data.transactions.length === 0 && <p>No transactions for today</p>}
         </div>
       </section>
 
@@ -273,8 +259,8 @@ const fetchStatistics = async () => {
         <div
           className={scss.modalBackdrop}
           onClick={() => {
-            setSelectedCustomer(null);
-            setDetailsError("");
+            setSelectedCustomer(null)
+            setDetailsError("")
           }}
         >
           <section
@@ -288,8 +274,8 @@ const fetchStatistics = async () => {
               type="button"
               className={scss.modalClose}
               onClick={() => {
-                setSelectedCustomer(null);
-                setDetailsError("");
+                setSelectedCustomer(null)
+                setDetailsError("")
               }}
               aria-label="Close"
             >
@@ -345,5 +331,5 @@ const fetchStatistics = async () => {
         </div>
       )}
     </main>
-  );
+  )
 }
