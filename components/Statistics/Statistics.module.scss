@@ -9,6 +9,194 @@ fill: none
 
 
 }
+.statistics {
+  width: 100%;
+  padding: 40px 48px;
+}
+
+.pageTitle {
+  margin-bottom: 32px;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.statsGrid {
+  display: flex;
+gap: 20px;
+  width: 100%;
+}
+
+.statCard {
+  min-height: 296px;
+  padding: 36px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  background-color: #fff;
+  border: 2px solid #e5e5e5;
+  border-radius: 20px;
+}
+
+.statCard:first-child {
+  border-color: #50b77c;
+}
+
+.statLabel {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+
+  color: #a3a3a3;
+  font-size: 30px;
+  font-weight: 400;
+}
+
+.statIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #202124;
+}
+
+.icon {
+  display: block;
+  width: 56px;
+  height: 56px;
+
+  fill: none;
+  stroke: currentColor;
+}
+
+.statValue {
+  margin: 0;
+  color: #202124;
+  font-size: 68px;
+  line-height: 1.1;
+  font-weight: 600;
+}
+
+/* Інші секції */
+
+.section {
+  margin-top: 48px;
+}
+
+.sectionTitle {
+  margin-bottom: 24px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.tableWrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.customersTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.customersTable th,
+.customersTable td {
+  padding: 16px;
+  text-align: left;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.transactions {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.transaction {
+  display: grid;
+  grid-template-columns: 100px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 20px;
+}
+
+.transactionBadge {
+  text-align: center;
+}
+
+.transactionDescription {
+  margin: 0;
+}
+
+.transactionAmount {
+  justify-self: end;
+}
+
+@media (max-width: 767px) {
+  .statistics {
+    padding: 24px 16px;
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .statCard {
+    min-height: 200px;
+    padding: 24px;
+  }
+
+  .statLabel {
+    gap: 16px;
+    font-size: 22px;
+  }
+
+  .icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .statValue {
+    font-size: 48px;
+  }
+
+  .transaction {
+    grid-template-columns: 72px minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .transactionBadge {
+    width: 72px;
+  }
+
+  .transactionDescription {
+    font-size: 14px;
+  }
+
+  .transactionAmount {
+    grid-column: 2;
+    justify-self: end;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .statistics {
+    padding: 32px 24px;
+  }
+
+  .statCard {
+   
+  }
+
+  .statLabel {
+    gap: 16px;
+    font-size: 24px;
+  }
+
+  .statValue {
+    font-size: 56px;
+  }
+}
   .transaction {
     grid-template-columns: 72px minmax(0, 1fr);
     gap: 10px;
