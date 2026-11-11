@@ -4,7 +4,7 @@
     width: 28px;
 height: 28px;
 stroke-width: 1.50px;
-stroke: #1d1e21;
+stroke: v.$black;
 fill: none
 
 
@@ -47,7 +47,7 @@ gap: 20px;
   align-items: center;
   gap: 24px;
 
-  color: #a3a3a3;
+  color: v.$light-gray;
   font-size: 30px;
   font-weight: 400;
 }
@@ -103,7 +103,7 @@ gap: 20px;
 .customersTable td {
   padding: 16px;
   text-align: left;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid v.$background-color;
 }
 
 .transactions {
