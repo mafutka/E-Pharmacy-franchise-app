@@ -5,7 +5,6 @@ import type {
   StatisticsResponse,
   CustomerDetailsResponse,
 } from "../../types/statistics"
-import { api } from "@/services/api"
 import scss from "./Statistics.module.scss"
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000"
