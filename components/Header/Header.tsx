@@ -12,8 +12,9 @@ import scss from "./Header.module.scss"
 
 export default function Header({ isAuth }: { isAuth: boolean }) {
   const [isOpen, setIsOpen] = useState(false)
-  const pathname = usePathname()
-  const router = useRouter()
+const pathname = usePathname()
+const router = useRouter()
+
   const logout = useAuthStore((s) => s.logout)
 
   const handleLogout = async () => {
@@ -48,6 +49,7 @@ export default function Header({ isAuth }: { isAuth: boolean }) {
                   pathname.startsWith("/medicine") ? scss.active : ""
                 }`}
                 href="/medicine"
+                onClick={() => setIsOpen(false)}
               >
                 <span>Medicines</span>
               </Link>
@@ -56,6 +58,7 @@ export default function Header({ isAuth }: { isAuth: boolean }) {
                   pathname.startsWith("/shop") ? scss.active : ""
                 }`}
                 href="/shop"
+                onClick={() => setIsOpen(false)}
               >
                 <span>Shop</span>
               </Link>
@@ -64,6 +67,7 @@ export default function Header({ isAuth }: { isAuth: boolean }) {
                   pathname.startsWith("/statistics") ? scss.active : ""
                 }`}
                 href="/statistics"
+                onClick={() => setIsOpen(false)}
               >
                 <span>Statistics</span>
               </Link>
