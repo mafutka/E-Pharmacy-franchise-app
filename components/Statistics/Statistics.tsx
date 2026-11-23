@@ -5,6 +5,7 @@ import type {
   StatisticsResponse,
   CustomerDetailsResponse,
 } from "../../types/statistics"
+import StatsCards from "./components/StatsCards/StatsCards"
 import scss from "./Statistics.module.scss"
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000"
@@ -14,22 +15,6 @@ const formatMoney = (amount: number) =>
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   })
-
-function StatIcon({ type }: { type: "products" | "suppliers" | "customers" }) {
-  if (type === "products") {
-    return (
-      <svg className={scss.icon}>
-        <use href="/sprite.svg#icon-coins" />
-      </svg>
-    )
-  }
-
-  return (
-  <svg className={scss.icon}>
-        <use href="/sprite.svg#icon-chels" />
-      </svg>
-  )
-}
 
 export default function Statistics() {
   const [data, setData] = useState<StatisticsResponse | null>(null)
@@ -127,48 +112,10 @@ export default function Statistics() {
     )
   }
 
-  const stats = [
-    {
-      id: "products",
-      label: "All products",
-      value: data.totalProducts,
-      icon: "products" as const,
-    },
-    {
-      id: "suppliers",
-      label: "All suppliers",
-      value: data.totalSuppliers,
-      icon: "suppliers" as const,
-    },
-    {
-      id: "customers",
-      label: "All customers",
-      value: data.totalCustomers,
-      icon: "customers" as const,
-    },
-  ]
-
   return (
     <main className={scss.statistics}>
       <h1 className={scss.pageTitle}>Statistics</h1>
-
-      <section className={scss.statsGrid} aria-label="General statistics">
-        {stats.map((stat) => (
-          <article key={stat.id} className={scss.statCard}>
-            <div className={scss.statLabel}>
-              <span className={scss.statIcon}>
-                <StatIcon type={stat.icon} />
-              </span>
-              <span>{stat.label}</span>
-            </div>
-
-            <p className={scss.statValue}>
-              {stat.value.toLocaleString("en-US")}
-            </p>
-          </article>
-        ))}
-      </section>
-
+<StatsCards data={data}/>
       <section className={scss.section}>
         <h2 className={scss.sectionTitle}>Recent Customers</h2>
 

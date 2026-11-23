@@ -22,15 +22,15 @@ fill: none;
   display: flex;
 gap: 20px;
   width: 100%;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .statCard {
-  min-height: 296px;
-  padding: 36px 48px;
-  display: flex;
+ display: flex;
   flex-direction: column;
-  justify-content: space-between;
-
+  justify-content: flex-start;
+gap: 32px;
+  padding: 14px;
   background-color: v.$white;
   border: 2px solid v.$gray;
   border-radius: 20px;
