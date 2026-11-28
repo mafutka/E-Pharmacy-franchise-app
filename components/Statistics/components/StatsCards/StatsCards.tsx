@@ -1,3 +1,6 @@
+"use client"
+
+import { useState } from "react"
 import type { StatisticsResponse } from "../../../../types/statistics"
 import scss from "../../Statistics.module.scss"
 
@@ -29,6 +32,8 @@ function StatIcon({
 }
 
 export default function StatsCards({ data }: StatsCardsProps) {
+  const [selectedStat, setSelectedStat] = useState<string | null>(null)
+
   const stats = [
     {
       id: "products",
@@ -53,18 +58,26 @@ export default function StatsCards({ data }: StatsCardsProps) {
   return (
     <section className={scss.statsGrid} aria-label="General statistics">
       {stats.map((stat) => (
-        <article key={stat.id} className={scss.statCard}>
-          <div className={scss.statLabel}>
+        <button
+          key={stat.id}
+          type="button"
+          className={`${scss.statCard} ${
+            selectedStat === stat.id ? scss.selected : ""
+          }`}
+          onClick={() => setSelectedStat(stat.id)}
+          aria-pressed={selectedStat === stat.id}
+        >
+          <span className={scss.statLabel}>
             <span className={scss.statIcon}>
               <StatIcon type={stat.icon} />
             </span>
             <span>{stat.label}</span>
-          </div>
+          </span>
 
-          <p className={scss.statValue}>
+          <span className={scss.statValue}>
             {stat.value.toLocaleString("en-US")}
-          </p>
-        </article>
+          </span>
+        </button>
       ))}
     </section>
   )
